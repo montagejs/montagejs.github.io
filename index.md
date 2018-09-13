@@ -1,5 +1,5 @@
 ---
-layout: landing
+layout: default
 title: Home - Montage Studio Documentation
 this-page: index
 ---
