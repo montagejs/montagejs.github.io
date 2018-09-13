@@ -1,0 +1,42 @@
+---
+
+layout: default
+title: 404 - MontageJS
+
+---
+
+<section>
+    <div class="wrapper">
+        <div class="cols">
+            <aside class="col col-1-2">
+                <h1 class="title-404">404</h1>
+            </aside>
+            <div class="col col-1-2">
+                <p>Oops... looks like the page you were looking for was either moved or removed from our site.</p>
+                <p>Please return to our
+                    <a href="http://montage.org">home page</a>
+                   or use the links above to find the information you want.</p>
+                <p>You can also
+                    <a href="http://montage.org/company/contact-us/">contact us</a>
+                   with further questions.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+
+    var path = window.location.pathname;
+
+    // sets the title so we know which URLs are broken
+    document.title = "404 - " + path;
+
+    // redirect old API docs from /apis/ to /api/
+    var oldApiDocMatcher = /\/apis\/([^.]*).html/;
+    var oldApiDocMatch = path.match(oldApiDocMatcher);
+
+    if (oldApiDocMatch) {
+        window.location = "/api/" + oldApiDocMatch[1] + ".html";
+    }
+
+</script>

@@ -1,0 +1,188 @@
+/* These Styles get shared between the index and sub pages */
+
+/* MontageJS blue: hsl(210,75%,57%) / #4092E4 */
+
+/* Imports ----------------------------------------- */
+
+@import "normalize.css";
+@import "pages.css";
+@import url("//cloud.typography.com/6210892/625004/css/fonts.css");
+@import url("//montage.org/assets/styles/header-footer.css");
+
+/* Globals ----------------------------------------- */
+
+body {
+    margin: 0;
+    color: hsl(0,0%,25%);
+    font-family: 'Gotham A', 'Gotham B', sans-serif;
+    background-color: hsl(50,10%,96%);
+}
+
+a {
+    text-decoration: none;
+    color: hsl(220,60%,60%);
+}
+a:hover {
+    color: hsl(220,60%,70%);
+}
+a:active {
+    color: hsl(220,60%,50%);
+}
+
+h1 {
+    line-height: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
+.hasIframe {
+    /* Adds scroll support for iFrames on iOS */
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+pre, code {
+    font-family: "Menlo", "Consolas", monospace;
+}
+
+pre {font-size: 0.95em;}
+
+/* Sections ----------------------------------------- */
+
+section {
+    padding: 60px 40px;
+    border-top: 1px solid hsl(0,0%,100%);
+    border-bottom: 1px solid hsla(0,0%,0%,.1);
+}
+
+
+.wrapper {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+    line-height: 1.2em;
+}
+
+.title {
+    font-size: 24px;
+    margin: 0;
+}
+
+.sub-title {
+    margin-bottom: 0;
+}
+
+blockquote {
+    margin: 1.5em 0;
+    padding: 0 1em;
+    font-size: .9em;
+    line-height: 1.3;
+    color: hsl(0, 0%, 50%);
+    border-radius: 0 6px 6px 0;
+    border-left: 4px solid hsl(0, 0%, 80%);
+}
+
+hr {
+    border: none;
+    border-bottom: 2px dashed hsl(0, 0%, 80%);
+    margin: 2em 0;
+}
+
+
+/* Columns ----------------------------------------- */
+
+.cols {
+    font-size: 0; /* removes white-space but */
+}
+.cols > .col {
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 4%;
+    font-size: 16px;
+}
+
+.cols > .col:last-child {
+    margin-right: 0;
+}
+
+.col-1-2 { width: 48%; }
+.col-1-3 { width: 30.666%; }
+.col-2-3 { width: 65.333%; }
+
+@media all and (max-width: 700px) {
+    .cols > .col {
+        display: block;
+        vertical-align: top;
+    }
+    .col-1-2,
+    .col-1-3,
+    .col-2-3  {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+
+/* Button ----------------------------------------- */
+
+.button {
+    display: inline-block;
+    margin: 0 .5em;
+    padding: .5em 1em;
+    border-radius: 2em;
+    border: 1px solid hsl(0,0%,80%);
+}
+
+.button:hover {
+    background: hsla(0,0%,100%,.3);
+}
+
+.button:active {
+    background: hsla(0,0%,0%,.05);
+}
+
+.button.disabled {
+    opacity: .4;
+    color: hsl(0,0%,50%);
+    pointer-events: none;
+}
+
+
+/* Images ----------------------------------------- */
+
+.float-img {
+    float: left;
+    margin: 0 10px 10px 0;
+}
+
+.img-fill {
+    width: 100%;
+    vertical-align: top;
+}
+
+
+.img--float {
+    float: left;
+}
+
+.img--33 {
+    width: 33%;
+}
+
+.img--50 {
+    width: 50%;
+}
+
+.img--66 {
+    width: 66%;
+}
+
+.img--100 {
+    width: 100%;
+}
+
+footer .wrapper {
+  font-size: 14px !important;
+}

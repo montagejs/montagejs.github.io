@@ -1,0 +1,20 @@
+---
+layout: default
+docs: true
+---
+
+<section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+        {% include sidenav-toggle.html %}
+        {% include sidenav-docs.html %}
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/{{page.path}}"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                {{content}}
+            </article>
+        </div>
+    </div>
+</section>
