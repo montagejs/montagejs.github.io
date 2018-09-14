@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>MontageJS Objects</title>
+
+    <link rel="stylesheet" href="/montage.org/stylesheets/base.css">
+
+    <!--highlight.js-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="header-container">
+        <a class="logo" href="http://montage.org/">Home</a>
+
+        <input id="nav-toggle" class="nav-toggle nav-toggle--main" type="checkbox">
+        <label class="nav-toggleLabel nav-toggleLabel--main" for="nav-toggle" onclick></label>
+
+        <nav class="nav">
+            <a class="nav-item" href="#">Montage</a>
+        </nav>
+    </div>
+</header>
+
+
+
+  <section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+            
+<input id="sidenav-toggle" class="sidenav-toggle" type="checkbox">
+<label class="sidenav-toggleLabel" for="sidenav-toggle" onclick></label>
+
+        <nav class="sidenav">
+
+    <details open>
+        <summary>Quick Start</summary>
+        <a href="montagejs-setup.html" >Set Up</a>
+        <a href="hello-montage.html" >Hello Montage</a>
+    </details>
+
+    <details open>
+        <summary>Demos</summary>
+        <a href="montagejs-examples.html" >Examples</a>
+        <a href="http://montagejs.github.com/mfiddle/" target="_blank">Mfiddle</a>
+
+    </details>
+
+    <details open>
+        <summary>Tutorials</summary>
+        <a href="tutorial-using-substitutions-with-montagejs.html" >Using Substitutions</a>
+        <a href="tutorial-reddit-client-with-montagejs.html" >Building a Reddit Client</a>
+        <a href="tutorial-3d-applications-with-montagejs.html" >Building 3D Applications</a>
+    </details>
+
+    <details open>
+        <summary>Concepts</summary>
+        <a href="bootstrapping.html" >Bootstrapping</a>
+        <a href="application.html" >Application</a>
+        <a href="montagejs-templates.html" >Templates</a>
+        <a href="components.html" >Components</a>
+        <a href="component-composition.html" >Component Composition</a>
+        <a href="serialization-declaration.html" >Serialization Declaration</a>
+        <a href="montagejs-objects.html" class="active">Objects</a>
+        <a href="data-binding.html" >Data Binding</a>
+        <a href="event-handling.html" >Event Handling</a>
+        <a href="draw-cycle.html" >Draw Cycle</a>
+        <a href="blueprints.html" >Blueprints</a>
+        <a href="gestures-composers.html" >Gestures & Composers</a>
+        <a href="naming-conventions.html" >Naming Conventions</a>
+    </details>
+
+    <details open>
+        <summary>Built-in Components</summary>
+        <a href="repetition.html" >Repetition</a>
+        <a href="substitution.html" >Substitution</a>
+        <a href="overlay.html" >Overlay</a>
+    </details>
+
+    <details open>
+        <summary>UI Component Sets</summary>
+        <a href="themes.html" >Introduction</a>
+        <a href="theme-digit-components.html" >Digit</a>
+        <a href="theme-matte-components.html" >Matte</a>
+        <a href="theme-native-components.html" >Native</a>
+        <a href="autocomplete.html" >Autocomplete</a>
+    </details>
+
+    <details open>
+        <summary>Tools</summary>
+        <a href="tools-minit.html" >Minit</a>
+        <a href="tools-mop.html" >Mop</a>
+    </details>
+
+    <details open>
+        <summary>Help</summary>
+        <a href="faq.html" >FAQ</a>
+        <a href="frb.html" >FAQ - FRB Transition</a>
+        <a href="troubleshooting.html" >Troubleshooting</a>
+    </details>
+
+    <hr />
+
+    <a class="sidenav-mainLink" href="/montage.org/api/Montage.html">API Reference</a>
+
+    <hr />
+
+</nav>
+
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/montagejs/montagejs-objects.md"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                <h1 id="montage-objects">Montage Objects</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#example-a-javascript-ecmascript-5" id="markdown-toc-example-a-javascript-ecmascript-5">Example A: JavaScript (ECMAScript 5)</a></li>
+  <li><a href="#example-b-montage-framework" id="markdown-toc-example-b-montage-framework">Example B: Montage Framework</a></li>
+  <li><a href="#montage-methods" id="markdown-toc-montage-methods">Montage Methods</a></li>
+  <li><a href="#extending-the-javascript-object-model" id="markdown-toc-extending-the-javascript-object-model">Extending the JavaScript Object Model</a></li>
+</ul>
+
+<p>MontageJS provides a thin wrapper over the JavaScript object model. Types are represented by <code class="highlighter-rouge">constructor</code> functions. Constructor functions have a <code class="highlighter-rouge">prototype</code>. The <code class="highlighter-rouge">prototype</code> has a <code class="highlighter-rouge">constructor</code>. <code class="highlighter-rouge">instanceof</code> and <code class="highlighter-rouge">new</code> work as you would expect.</p>
+
+<p>For example, following A and B examples are equivalent:</p>
+
+<h3 id="example-a-javascript-ecmascript-5">Example A: JavaScript (ECMAScript 5)</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">function</span> <span class="nx">Penguin</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">Bird</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">Penguin</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Bird</span><span class="p">.</span><span class="nx">prototype</span><span class="p">);</span>
+
+<span class="nx">Penguin</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="kd">constructor</span> <span class="o">=</span> <span class="nx">Penguin</span><span class="p">;</span>
+
+<span class="nx">Penguin</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">fly</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">Bird</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">fly</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="nb">Object</span><span class="p">.</span><span class="nx">defineProperty</span><span class="p">(</span><span class="nx">Penguin</span><span class="p">.</span><span class="nx">prototype</span><span class="p">,</span> <span class="s2">"habitat"</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">get</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_habitat</span><span class="p">;</span>
+    <span class="p">},</span>
+    <span class="na">set</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">_habitat</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="nx">Penguin</span><span class="p">.</span><span class="nx">staticMethod</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{};</span>
+</code></pre></div></div>
+
+<h3 id="example-b-montage-framework">Example B: Montage Framework</h3>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Penguin</span> <span class="o">=</span> <span class="nx">Bird</span><span class="p">.</span><span class="nx">specialize</span><span class="p">({</span>
+    <span class="na">constructor</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span> <span class="nx">Penguin</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="k">super</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">fly</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="k">super</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">_habitat</span><span class="p">:</span> <span class="p">{</span><span class="na">value</span><span class="p">:</span> <span class="kc">null</span><span class="p">},</span>
+    <span class="na">habitat</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">get</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">_habitat</span><span class="p">;</span>
+        <span class="p">},</span>
+        <span class="na">set</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="nx">_habitat</span> <span class="o">=</span> <span class="nx">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">staticMethod</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>The Montage <code class="highlighter-rouge">constructor</code> has a <code class="highlighter-rouge">specialize</code> method that accepts <a href="http://ecma-international.org/ecma-262/5.1/#sec-8.6">ECMAScript 5 property descriptors</a> for the new prototype and another optional set of descriptors for properties of its constructor. It uses <code class="highlighter-rouge">Object.create</code> to extend the parent’s prototype, and <code class="highlighter-rouge">Object.defineProperty</code> to apply the property descriptors. For the most part, this just provides a convenient and error-resistant way to declare new types, reinforcing the existing JavaScript conventions.</p>
+
+<h2 id="montage-methods">Montage Methods</h2>
+
+<p>However, MontageJS does provide some additional features. Within any <code class="highlighter-rouge">Montage</code> method, <code class="highlighter-rouge">super(...args)</code> will call the eponymous method of the parent prototype. Likewise, <code class="highlighter-rouge">super()</code> within a getter will get a property according to the parent prototype, and <code class="highlighter-rouge">super(value)</code> within a setter will set a property according to the parent prototype.</p>
+
+<p>In this example, the <code class="highlighter-rouge">Type</code> implements an <code class="highlighter-rouge">id</code> getter, where identifiers are granted in the order of first access. <code class="highlighter-rouge">Subtype</code> overrides the identifier property such that the identifier is a string with an underscore prefix.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">ids</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">WeakMap</span><span class="p">();</span>
+<span class="kd">var</span> <span class="nx">nextId</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">Type</span> <span class="o">=</span> <span class="nx">Montage</span><span class="p">.</span><span class="nx">specialize</span><span class="p">({</span>
+    <span class="na">id</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">get</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">ids</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="k">this</span><span class="p">))</span> <span class="p">{</span>
+                <span class="nx">ids</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">nextId</span><span class="o">++</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="nx">ids</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">Subtype</span> <span class="o">=</span> <span class="nx">Type</span><span class="p">.</span><span class="nx">specialize</span><span class="p">({</span>
+    <span class="na">id</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">get</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="s2">"_"</span> <span class="o">+</span> <span class="k">this</span><span class="p">.</span><span class="k">super</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Montage also supports a small number of modifications to the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">ES5 property-descriptor</a>. Montage alters the defaults for <code class="highlighter-rouge">writable</code> and <code class="highlighter-rouge">configurable</code> properties are both writable and configurable unless you specify otherwise. In general properties continue are <code class="highlighter-rouge">enumerable</code> by default. The default is changed for properties with:</p>
+
+<ul>
+  <li>Names that start with <code class="highlighter-rouge">_</code> - will not be <code class="highlighter-rouge">enumerable</code></li>
+  <li>Value is a function (methods)</li>
+</ul>
+
+<p>Please see <a href="/montage.org/api/Montage.html#defineProperty"><code class="highlighter-rouge">Montage.defineProperty</code></a> API for more info.</p>
+
+<h2 id="extending-the-javascript-object-model">Extending the JavaScript Object Model</h2>
+
+<p>Perhaps the most subtle and interesting way that <code class="highlighter-rouge">Montage.specialize</code> extends the JavaScript object model is that it causes constructor functions to inherit from their parent constructor, in parallel the prototype chain. This makes it possible to use or override <code class="highlighter-rouge">Montage.specialize</code>, <code class="highlighter-rouge">defineProperties</code>, and <code class="highlighter-rouge">defineProperty</code> for subtrees of your object model. Montage implements <code class="highlighter-rouge">specialize</code> and <code class="highlighter-rouge">defineProperties</code> such that an overridden <code class="highlighter-rouge">defineProperty</code> is sufficient to specialize the property descriptor protocol for all descendent types. Overriding <code class="highlighter-rouge">specialize</code> gives you a hook to decorate the constructor for all descendent types.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Type</span> <span class="o">=</span> <span class="nx">Montage</span><span class="p">.</span><span class="nx">specialize</span><span class="p">({</span>
+<span class="p">},</span> <span class="p">{</span>
+    <span class="na">specialize</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="k">super</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">defineProperty</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">descriptor</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="k">super</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">descriptor</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>For debugging, it is best to give your constructor a name. <code class="highlighter-rouge">Montage.specialize</code> permits a specialization to  provide the constructor among the <code class="highlighter-rouge">prototype</code> property descriptors. It lifts this property out instead of providing a default, anonymous constructor function then goes on to set up its prototype and inheritance chain as normal.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Type</span> <span class="o">=</span> <span class="nx">Montage</span><span class="p">.</span><span class="nx">specialize</span><span class="p">({</span>
+    <span class="na">constructor</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span> <span class="nx">Type</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="k">super</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+
+<span class="kd">var</span> <span class="nx">Subtype</span> <span class="o">=</span> <span class="nx">Type</span><span class="p">.</span><span class="nx">specialize</span><span class="p">({</span>
+    <span class="na">constructor</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span> <span class="nx">Subtype</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="k">super</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+            </article>
+        </div>
+    </div>
+</section>
+
+
+  <footer class="footer">
+
+    <div class="wrapper">
+
+      <ul class="sitemap">
+            <li>
+                <a href="http://montage.org/gallery/" class="sitemap-main">Gallery</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/product/" class="sitemap-main">Product</a>
+                <a href="/montage.org/montage-studio/ide-at-a-glance.html">Overview</a>
+                <a href="/montage.org/montage-studio/tutorial-simple-to-do.html">Quick Start</a>
+                <a href="/montage.org/montage-studio/faq.html">FAQ</a>
+            </li> -->
+            <li>
+                <a href="http://montage.org/montagejs" class="sitemap-main">Open Source</a>
+                <a href="/montage.org/montagejs/">Docs</a>
+                <a href="/montage.org/montagejs/montagejs-setup.html">Quick Start</a>
+                <a href="/montage.org/montagejs/montagejs-examples.html">Examples</a>
+                <a href="/montage.org/api/AbstractButton.html">API</a>
+                <a href="/montage.org/montagejs/faq.html">FAQ</a>
+            </li>
+            <li>
+                <!-- <a href="http://montage.org/community" class="sitemap-main">Community</a> -->
+                <!-- <a href="http://forum.montage.org/">Forum</a> -->
+                <!-- <a href="http://montage.org/blog/events/">Events</a> -->
+                <a href="https://gitter.im/montagejs" target="_blank">Gitter</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/blog/" class="sitemap-main">Blog</a>
+            </li> -->
+            <li>
+                <a href="https://en.wikipedia.org/wiki/MontageJS">History</a>
+                <!-- <a href="http://montage.org/press/">Press</a> -->
+                <!-- <a href="http://montage.org/contact-us/">Contact us</a> -->
+            </li>
+      </ul>
+
+        <a href="http://montage.org/" class="footer-logo"></a>
+
+      <p class="footer-end">2010–2018 Motorola, Montage Studio, Pacific Disaster Center, Kaazing</p>
+    </div>
+
+    </footer>
+
+
+  <!-- Google -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35717912-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

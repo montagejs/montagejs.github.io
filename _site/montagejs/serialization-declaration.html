@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>Montage Serialization Declaration</title>
+
+    <link rel="stylesheet" href="/montage.org/stylesheets/base.css">
+
+    <!--highlight.js-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="header-container">
+        <a class="logo" href="http://montage.org/">Home</a>
+
+        <input id="nav-toggle" class="nav-toggle nav-toggle--main" type="checkbox">
+        <label class="nav-toggleLabel nav-toggleLabel--main" for="nav-toggle" onclick></label>
+
+        <nav class="nav">
+            <a class="nav-item" href="#">Montage</a>
+        </nav>
+    </div>
+</header>
+
+
+
+  <section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+            
+<input id="sidenav-toggle" class="sidenav-toggle" type="checkbox">
+<label class="sidenav-toggleLabel" for="sidenav-toggle" onclick></label>
+
+        <nav class="sidenav">
+
+    <details open>
+        <summary>Quick Start</summary>
+        <a href="montagejs-setup.html" >Set Up</a>
+        <a href="hello-montage.html" >Hello Montage</a>
+    </details>
+
+    <details open>
+        <summary>Demos</summary>
+        <a href="montagejs-examples.html" >Examples</a>
+        <a href="http://montagejs.github.com/mfiddle/" target="_blank">Mfiddle</a>
+
+    </details>
+
+    <details open>
+        <summary>Tutorials</summary>
+        <a href="tutorial-using-substitutions-with-montagejs.html" >Using Substitutions</a>
+        <a href="tutorial-reddit-client-with-montagejs.html" >Building a Reddit Client</a>
+        <a href="tutorial-3d-applications-with-montagejs.html" >Building 3D Applications</a>
+    </details>
+
+    <details open>
+        <summary>Concepts</summary>
+        <a href="bootstrapping.html" >Bootstrapping</a>
+        <a href="application.html" >Application</a>
+        <a href="montagejs-templates.html" >Templates</a>
+        <a href="components.html" >Components</a>
+        <a href="component-composition.html" >Component Composition</a>
+        <a href="serialization-declaration.html" class="active">Serialization Declaration</a>
+        <a href="montagejs-objects.html" >Objects</a>
+        <a href="data-binding.html" >Data Binding</a>
+        <a href="event-handling.html" >Event Handling</a>
+        <a href="draw-cycle.html" >Draw Cycle</a>
+        <a href="blueprints.html" >Blueprints</a>
+        <a href="gestures-composers.html" >Gestures & Composers</a>
+        <a href="naming-conventions.html" >Naming Conventions</a>
+    </details>
+
+    <details open>
+        <summary>Built-in Components</summary>
+        <a href="repetition.html" >Repetition</a>
+        <a href="substitution.html" >Substitution</a>
+        <a href="overlay.html" >Overlay</a>
+    </details>
+
+    <details open>
+        <summary>UI Component Sets</summary>
+        <a href="themes.html" >Introduction</a>
+        <a href="theme-digit-components.html" >Digit</a>
+        <a href="theme-matte-components.html" >Matte</a>
+        <a href="theme-native-components.html" >Native</a>
+        <a href="autocomplete.html" >Autocomplete</a>
+    </details>
+
+    <details open>
+        <summary>Tools</summary>
+        <a href="tools-minit.html" >Minit</a>
+        <a href="tools-mop.html" >Mop</a>
+    </details>
+
+    <details open>
+        <summary>Help</summary>
+        <a href="faq.html" >FAQ</a>
+        <a href="frb.html" >FAQ - FRB Transition</a>
+        <a href="troubleshooting.html" >Troubleshooting</a>
+    </details>
+
+    <hr />
+
+    <a class="sidenav-mainLink" href="/montage.org/api/Montage.html">API Reference</a>
+
+    <hr />
+
+</nav>
+
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/montagejs/serialization-declaration.md"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                <h1 id="montage-serialization-declaration">Montage Serialization Declaration</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#json-overview" id="markdown-toc-json-overview">JSON Overview</a></li>
+  <li><a href="#declaration-example" id="markdown-toc-declaration-example">Declaration Example</a></li>
+  <li><a href="#declaration-owner" id="markdown-toc-declaration-owner">Declaration Owner</a></li>
+  <li><a href="#declaration-formats" id="markdown-toc-declaration-formats">Declaration Formats</a>    <ul>
+      <li><a href="#serializing-a-custom-object" id="markdown-toc-serializing-a-custom-object">Serializing a Custom Object</a></li>
+      <li><a href="#referencing-dom-elements" id="markdown-toc-referencing-dom-elements">Referencing DOM Elements</a></li>
+      <li><a href="#referencing-other-objects" id="markdown-toc-referencing-other-objects">Referencing Other Objects</a></li>
+    </ul>
+  </li>
+  <li><a href="#data-bindings-in-declarations" id="markdown-toc-data-bindings-in-declarations">Data Bindings in Declarations</a></li>
+  <li><a href="#event-listeners-in-declarations" id="markdown-toc-event-listeners-in-declarations">Event Listeners in Declarations</a></li>
+  <li><a href="#serialization-format" id="markdown-toc-serialization-format">Serialization Format</a></li>
+</ul>
+
+<blockquote>
+  <p>Montage philosophy - <strong>homoiconicity</strong> - A Montage component declaration is data that you can manipulate programmatically.</p>
+</blockquote>
+
+<p>This document explains the serialization format MontageJS uses to serialize, and later deserialize, a declaration.</p>
+
+<p>A declaration describes the objects, components, properties, component data bindings, and DOM relationships involved in a MontageJS application. MontageJS uses JavaScript Object Notation (JSON) as the serialization format. At runtime, MontageJS parses the JSON structure and deserializes its contents into JavaScript, which is then evaluated and executed in the browser.</p>
+
+<h2 id="json-overview">JSON Overview</h2>
+
+<p>JSON, a text format designed for serializing structured data, can represent six data types:</p>
+
+<ul>
+  <li>Four primitive types: strings, numbers, Booleans, and null</li>
+  <li>Two structured types: objects and arrays</li>
+</ul>
+
+<p>In JSON, an object is represented as an unordered collection of zero or more name/value pairs. A name is a string, and a value is one of the primitive JSON data types—string, number, Boolean, or null. An array structure is represented as square brackets surrounding zero or more values (or elements). Elements are separated by commas.</p>
+
+<p>For example, the following JSON content defines an object named <code class="highlighter-rouge">anObject</code> that contains three properties:</p>
+
+<ul>
+  <li>A string named <code class="highlighter-rouge">id</code></li>
+  <li>An array named <code class="highlighter-rouge">colors</code></li>
+  <li>A Boolean named <code class="highlighter-rouge">readyState</code></li>
+</ul>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"anObject"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123asd"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"colors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">],</span><span class="w">
+    </span><span class="s2">"readyState"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>In addition to these standard data types, MontageJS supports a few special types to enable serialization of more complex objects. These types include references to other objects in the same serialization, DOM references, functions, and regular expressions.</p>
+
+<p>Serialization currently does not support JavaScript-style comments. You can add a <code class="highlighter-rouge">"comment": "this is a comment"</code> key/value pair if desired.</p>
+
+<h2 id="declaration-example">Declaration Example</h2>
+
+<p>The following simple (yet complete) MontageJS application is defined in a single HTML document. This example gives you an idea of what serialization in MontageJS is about and why it’s useful.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+   <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"../../montage.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+   <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/montage-serialization"</span><span class="nt">&gt;</span>
+   <span class="p">{</span>
+       <span class="s2">"firstName"</span><span class="p">:</span> <span class="p">{</span>
+           <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"digit/ui/text-field.reel"</span><span class="p">,</span>
+           <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+               <span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"fName"</span><span class="p">}</span>
+           <span class="p">}</span>
+        <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="nt">&lt;/script&gt;</span>
+   <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">data-montage-id=</span><span class="s">"fName"</span><span class="nt">&gt;&lt;/input&gt;</span>
+   <span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>Important things to note:</p>
+
+<ul>
+  <li>The HTML body section contains a single <code class="highlighter-rouge">&lt;input&gt;</code> tag, identified with the <a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/elements.html#custom-data-attribute">custom data-attribute</a> <code class="highlighter-rouge">data-montage-id</code> of <code class="highlighter-rouge">fName</code>.</li>
+  <li>The head section contains a <code class="highlighter-rouge">&lt;script&gt;</code> block of type <code class="highlighter-rouge">text/montage-serialization</code>. This block contains all serialized MontageJS objects used in the document.</li>
+  <li>The serialization block declares a TextField component with an object label of <code class="highlighter-rouge">firstName</code>. The component’s prototype in form of a module id (“digit/ui/text-field.reel”) allows MontageJS to recreate the component from its serialized form at runtime.</li>
+  <li>The <code class="highlighter-rouge">properties</code> object assigns initial values to the component’s properties. One of the most important properties of a MontageJS component is its <code class="highlighter-rouge">element</code> property, which corresponds to the associated HTML body element on which the component operates. In this case, the TextField component’s <code class="highlighter-rouge">element</code> property is set to the <code class="highlighter-rouge">&lt;input&gt;</code> tag that has the ID <code class="highlighter-rouge">"fName"</code>. The MontageJS serialization format provides a special JSON object representation to refer to an element. This special object’s name is a hash mark (“#”) and its value is the ID of the element.</li>
+  <li>MontageJS can load components from a directory that has a .reel extension. The module system redirects <code class="highlighter-rouge">require("x.reel")</code> to <code class="highlighter-rouge">require("x.reel/x")</code>.</li>
+</ul>
+
+<h2 id="declaration-owner">Declaration Owner</h2>
+
+<p>A MontageJS serialization can declare an optional object named <code class="highlighter-rouge">owner</code>. The <code class="highlighter-rouge">owner</code> acts as the controller for the document. For example, the following code creates a new module in <code class="highlighter-rouge">main.js</code> that exports a <code class="highlighter-rouge">Main</code> prototype object:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Module: main.js</span>
+<span class="kd">var</span> <span class="nx">Component</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"montage/ui/component"</span><span class="p">).</span><span class="nx">Component</span><span class="p">;</span>
+
+<span class="c1">// Exported object name: Main</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">Main</span> <span class="o">=</span> <span class="nx">Component</span><span class="p">.</span><span class="nx">specialize</span><span class="p">({</span>
+<span class="c1">// Prototype methods and properties</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/montage-serialization"</span><span class="nt">&gt;</span>
+<span class="p">{</span>
+   <span class="s2">"owner"</span><span class="p">:</span> <span class="p">{</span>
+       <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"main"</span><span class="p">,</span>
+       <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"main"</span><span class="p">}}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>You can also export a custom class name in JavaScript: <code class="highlighter-rouge">exports.Test = ...</code>, then reference it in serialization in html template: <code class="highlighter-rouge">"prototype": "path/to/file[Test]"</code>.</p>
+
+<h2 id="declaration-formats">Declaration Formats</h2>
+
+<p>The following sections explain object-dependent declarations.</p>
+
+<h3 id="serializing-a-custom-object">Serializing a Custom Object</h3>
+
+<p>To serialize custom JavaScript objects, including MontageJS components, define a JSON object with a <code class="highlighter-rouge">prototype</code> property. This property defines the prototype to use to instantiate the object.</p>
+
+<p>For example, the following declaration fragment declares a Button component:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/montage-serialization"</span><span class="nt">&gt;</span>
+<span class="p">{</span>
+    <span class="s2">"loginButton"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"digit/ui/button.reel"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+</code></pre></div></div>
+
+<p>At runtime MontageJS parses this declaration and evaluates it as the following JavaScript:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Button</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"digit/ui/button.reel"</span><span class="p">).</span><span class="nx">Button</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Note that object labels in a declaration (such as <code class="highlighter-rouge">"loginButton"</code> in the above example) can only be accessed, in code, through the <code class="highlighter-rouge">templateObjects</code> property of the owner component.</p>
+
+<p>You can assign initial values to an object’s properties in a declaration by adding a <code class="highlighter-rouge">properties</code> object to the declaration. For example, the Button component has a <code class="highlighter-rouge">value</code> property that contains the string to display as the button’s label. The following assigns the value “Click me” to the Button component’s <code class="highlighter-rouge">value</code> property:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"loginButton"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"prototype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"digit/ui/button.reel"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+       </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Click me"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="referencing-dom-elements">Referencing DOM Elements</h3>
+<p>You can reference DOM elements from a MontageJS declaration using a special JSON object representation. This is commonly used to assign an HTML element to a component’s <code class="highlighter-rouge">element</code> property, or anytime you need a reference to a DOM element.</p>
+
+<p>To reference an element by ID, use the following JSON syntax, where <code class="highlighter-rouge">elementID</code> is the ID of an element in the same document:</p>
+
+<p><code class="highlighter-rouge">{"#": "elementID"}</code></p>
+
+<p>For example, the following template declares a <code class="highlighter-rouge">Button</code> component whose <code class="highlighter-rouge">element</code> property is assigned the <code class="highlighter-rouge">&lt;div&gt;</code> with ID of <code class="highlighter-rouge">loginButton</code>:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// index.html
+<span class="nt">&lt;html&gt;</span>
+ <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"../../montage.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/montage-serialization"</span><span class="nt">&gt;</span>
+ <span class="p">{</span>
+      <span class="s2">"loginBtn"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"montage/ui/button.reel"</span><span class="p">,</span>
+        <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"loginButton"</span><span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="nt">&lt;/script&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">data-montage-id=</span><span class="s">"loginButton"</span> <span class="na">class=</span><span class="s">"Text"</span><span class="nt">&gt;</span>Click to enter<span class="nt">&lt;/div&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h3 id="referencing-other-objects">Referencing Other Objects</h3>
+<p>Often you need to reference one serialized MontageJS object from another object in the same serialization. For instance, the serialization might declare a MontageJS button that you want to reference from the controller (or owner) object in the serialization.</p>
+
+<p>To reference an element by ID, use the following JSON syntax. In this example, <code class="highlighter-rouge">objectLabel</code> is the label assigned to the serialized object.</p>
+
+<p><code class="highlighter-rouge">{"@": "objectLabel"}</code></p>
+
+<p>To demonstrate, first create the owner prototype object that references the button. The owner object—a custom component named Main—is defined in a JavaScript file main.js. The Main component declares a variable <code class="highlighter-rouge">loginButton</code> that will hold the reference to the Button object in the main application. We can reference that variable elsewhere in the Main component, such as its <code class="highlighter-rouge">enterDocument()</code> function, which is invoked when the component enters the document. In this case, we use this callback opportunity to attach an event listener to the Button object. The event handler displays a message in the JavaScript console.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Module: main.js</span>
+<span class="c1">// Name: Main</span>
+<span class="kd">var</span> <span class="nx">Component</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"montage/ui/component"</span><span class="p">).</span><span class="nx">Component</span><span class="p">;</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">Main</span> <span class="o">=</span> <span class="nx">Component</span><span class="p">.</span><span class="nx">specialize</span><span class="p">({</span>
+    <span class="na">loginButton</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span><span class="kc">null</span>
+    <span class="p">},</span>
+    <span class="na">handleAction</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Button event handled..."</span><span class="p">);</span>
+            <span class="c1">// Do login stuff...</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="na">enterDocument</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">firstTime</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">firstTime</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">this</span><span class="p">.</span><span class="nx">loginButton</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"action"</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>Next, create the main HTML document that declares the Button and Main components. On line 10 a reference to the <code class="highlighter-rouge">"loginBtn"</code> serialized Button is assigned to the <code class="highlighter-rouge">"loginButton"</code> property of the Main component.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+ <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"../../montage.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/montage-serialization"</span><span class="nt">&gt;</span>
+ <span class="p">{</span>
+    <span class="s2">"owner"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"ui/main.reel"</span>
+        <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"main"</span><span class="p">},</span>
+            <span class="s2">"loginButton"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"@"</span><span class="p">:</span> <span class="s2">"loginBtn"</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">"loginBtn"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"digit/ui/button.reel"</span><span class="p">,</span>
+        <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"buttonDiv"</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"main"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">data-montage-id=</span><span class="s">"buttonDiv"</span> <span class="na">class=</span><span class="s">"Text"</span><span class="nt">&gt;</span>Click to enter<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="data-bindings-in-declarations">Data Bindings in Declarations</h2>
+
+<p>You can define event listener and data bindings between components within a serialization. To better understand the binding serialization syntax, look at the underlying JavaScript method used for creating data bindings, <code class="highlighter-rouge">Object.defineBinding()</code>. This method takes three parameters:</p>
+
+<ul>
+  <li>The target object defining the binding</li>
+  <li>The name of the target object’s property that is being bound</li>
+  <li>A descriptor object that specifies target path the direction and the source path</li>
+</ul>
+
+<p>Bindings defined in serialization are deserialized and defined using deserializer’s <code class="highlighter-rouge">montage-reviver</code>. This happens before the binding owner’s <code class="highlighter-rouge">constructor</code> is called. Keep this in mind when you need certain data at certain life cycle phases.</p>
+
+<p>You specify a component’s bindings in a serialization with a <code class="highlighter-rouge">bindings</code> JSON object:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"bindings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+   </span><span class="s2">"propertyName"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"&lt;-"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@targetObject.key.path.of.property"</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Above can also be defined in JavaScript:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">defineBinding</span><span class="p">(</span><span class="s2">"propertyName"</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">"&lt;-"</span><span class="p">:</span> <span class="s2">"targetObject.key.path.of.property"</span>
+<span class="p">});</span>
+
+<span class="c1">// or</span>
+
+<span class="k">this</span><span class="p">.</span><span class="nx">defineBindings</span><span class="p">({</span>
+    <span class="s2">"propertyName"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"&lt;-"</span><span class="p">:</span> <span class="s2">"targetObject.key.path.of.property"</span>
+    <span class="p">}</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>The following simple example adds data bindings to a serialization. It consists of two <code class="highlighter-rouge">Slider</code> components. The first <code class="highlighter-rouge">Slider</code>’s value is bound to the second <code class="highlighter-rouge">Slider</code>’s value. By default, data bindings are bi-directional, so changes to either bound property are pushed to the corresponding property. The arrow property <code class="highlighter-rouge">&lt;-</code> or <code class="highlighter-rouge">&lt;-&gt;</code> indicates if the the direction of the binding is one or two way.</p>
+
+<blockquote>
+  <p>Performance tip: prefer one-way bindings unless you absolutely need two-way bindings.</p>
+</blockquote>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Slider binding text<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"../../montage.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/montage-serialization"</span><span class="nt">&gt;</span>
+    <span class="p">{</span>
+        <span class="s2">"slider1"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"digit/ui/slider.reel"</span><span class="p">,</span>
+            <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"slider1"</span><span class="p">}</span>
+            <span class="p">},</span>
+            <span class="s2">"bindings"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"value"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"&lt;-"</span><span class="p">:</span> <span class="s2">"@slider2.value"</span><span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">"slider2"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"digit/ui/slider.reel"</span><span class="p">,</span>
+            <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"slider2"</span><span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-montage-id=</span><span class="s">"slider1"</span><span class="nt">&gt;&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">data-montage-id=</span><span class="s">"slider2"</span><span class="nt">&gt;&lt;/div&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="event-listeners-in-declarations">Event Listeners in Declarations</h2>
+
+<p>You can assign event listeners to serialized components in a serialization using a <code class="highlighter-rouge">listeners</code> property.</p>
+
+<p>This can reduce the amount of code required to establish event handling for your components. The serialization in the following example declares two objects: a custom controller object (Controller) and a Button. The controller object acts as the event listener object to respond to “action” events that the Button emits when clicked or touched.</p>
+
+<p>The following code for the Controller component defines a single function named <code class="highlighter-rouge">handleAction()</code>, which is invoked when the user clicks the button:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Module: controller.js</span>
+<span class="c1">// Name: Controller</span>
+<span class="kd">var</span> <span class="nx">Montage</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"montage/core/core"</span><span class="p">).</span><span class="nx">Montage</span><span class="p">;</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">Controller</span> <span class="o">=</span> <span class="nx">Montage</span><span class="p">.</span><span class="nx">specialize</span><span class="p">({</span>
+    <span class="na">handleAction</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"Button event handled..."</span><span class="p">);</span>
+            <span class="c1">// Do login stuff...</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>The following is the HTML document and component serialization. The “loginBtn” object in the serialization contains a <code class="highlighter-rouge">"listeners"</code> array property. This array can contain one or more elements.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+ <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"../../montage.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+ <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/montage-serialization"</span><span class="nt">&gt;</span>
+ <span class="p">{</span>
+    <span class="s2">"controller"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"controller"</span><span class="p">,</span>
+        <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"main"</span><span class="p">},</span>
+            <span class="s2">"loginButton"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"@"</span><span class="p">:</span> <span class="s2">"loginBtn"</span><span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">},</span>
+    <span class="s2">"loginBtn"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"prototype"</span><span class="p">:</span> <span class="s2">"digit/ui/button.reel"</span><span class="p">,</span>
+        <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"buttonDiv"</span><span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">"listeners"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"action"</span><span class="p">,</span>
+                <span class="s2">"listener"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"@"</span><span class="p">:</span> <span class="s2">"controller"</span><span class="p">},</span>
+                <span class="s2">"capture"</span><span class="p">:</span> <span class="kc">false</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+ <span class="p">}</span>
+ <span class="nt">&lt;/script&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"main"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">data-montage-id=</span><span class="s">"buttonDiv"</span> <span class="na">class=</span><span class="s">"Text"</span><span class="nt">&gt;</span>Click to enter<span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h2 id="serialization-format">Serialization Format</h2>
+<p>Serialization must be written in valid JSON format, as MontageJS uses the browser’s native JSON parsing APIs to parse the serialization block. If there are formatting errors, MontageJS throws an error and does not attempt to deserialize the JSON object. Two common formatting concerns are:</p>
+
+<ul>
+  <li>
+    <p>Trailing commas. A trailing comma after the last property in a JSON object or array generates runtime errors. In the following example the comma that trails the <code class="highlighter-rouge">readyState</code> property would generate a JSON parsing error:</p>
+
+    <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">  </span><span class="s2">"anObject"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"123asd"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"colors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w"> </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">],</span><span class="w">
+      </span><span class="s2">"readystate"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span></code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Matching brackets. Obviously, each open bracket must have a matching close bracket.</p>
+  </li>
+</ul>
+
+<p>MontageJS reports any formatting errors in the console when you run the application. For details on valid JSON formatting, please see http://www.json.org/.</p>
+
+            </article>
+        </div>
+    </div>
+</section>
+
+
+  <footer class="footer">
+
+    <div class="wrapper">
+
+      <ul class="sitemap">
+            <li>
+                <a href="http://montage.org/gallery/" class="sitemap-main">Gallery</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/product/" class="sitemap-main">Product</a>
+                <a href="/montage.org/montage-studio/ide-at-a-glance.html">Overview</a>
+                <a href="/montage.org/montage-studio/tutorial-simple-to-do.html">Quick Start</a>
+                <a href="/montage.org/montage-studio/faq.html">FAQ</a>
+            </li> -->
+            <li>
+                <a href="http://montage.org/montagejs" class="sitemap-main">Open Source</a>
+                <a href="/montage.org/montagejs/">Docs</a>
+                <a href="/montage.org/montagejs/montagejs-setup.html">Quick Start</a>
+                <a href="/montage.org/montagejs/montagejs-examples.html">Examples</a>
+                <a href="/montage.org/api/AbstractButton.html">API</a>
+                <a href="/montage.org/montagejs/faq.html">FAQ</a>
+            </li>
+            <li>
+                <!-- <a href="http://montage.org/community" class="sitemap-main">Community</a> -->
+                <!-- <a href="http://forum.montage.org/">Forum</a> -->
+                <!-- <a href="http://montage.org/blog/events/">Events</a> -->
+                <a href="https://gitter.im/montagejs" target="_blank">Gitter</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/blog/" class="sitemap-main">Blog</a>
+            </li> -->
+            <li>
+                <a href="https://en.wikipedia.org/wiki/MontageJS">History</a>
+                <!-- <a href="http://montage.org/press/">Press</a> -->
+                <!-- <a href="http://montage.org/contact-us/">Contact us</a> -->
+            </li>
+      </ul>
+
+        <a href="http://montage.org/" class="footer-logo"></a>
+
+      <p class="footer-end">2010–2018 Motorola, Montage Studio, Pacific Disaster Center, Kaazing</p>
+    </div>
+
+    </footer>
+
+
+  <!-- Google -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35717912-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>git subtree</title>
+
+    <link rel="stylesheet" href="/montage.org/stylesheets/base.css">
+
+    <!--highlight.js-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="header-container">
+        <a class="logo" href="http://montage.org/">Home</a>
+
+        <input id="nav-toggle" class="nav-toggle nav-toggle--main" type="checkbox">
+        <label class="nav-toggleLabel nav-toggleLabel--main" for="nav-toggle" onclick></label>
+
+        <nav class="nav">
+            <a class="nav-item" href="#">Montage</a>
+        </nav>
+    </div>
+</header>
+
+
+
+  <section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+            
+<input id="sidenav-toggle" class="sidenav-toggle" type="checkbox">
+<label class="sidenav-toggleLabel" for="sidenav-toggle" onclick></label>
+
+        <nav class="sidenav">
+
+    <details open>
+        <summary>Quick Start</summary>
+        <a href="montagejs-setup.html" >Set Up</a>
+        <a href="hello-montage.html" >Hello Montage</a>
+    </details>
+
+    <details open>
+        <summary>Demos</summary>
+        <a href="montagejs-examples.html" >Examples</a>
+        <a href="http://montagejs.github.com/mfiddle/" target="_blank">Mfiddle</a>
+
+    </details>
+
+    <details open>
+        <summary>Tutorials</summary>
+        <a href="tutorial-using-substitutions-with-montagejs.html" >Using Substitutions</a>
+        <a href="tutorial-reddit-client-with-montagejs.html" >Building a Reddit Client</a>
+        <a href="tutorial-3d-applications-with-montagejs.html" >Building 3D Applications</a>
+    </details>
+
+    <details open>
+        <summary>Concepts</summary>
+        <a href="bootstrapping.html" >Bootstrapping</a>
+        <a href="application.html" >Application</a>
+        <a href="montagejs-templates.html" >Templates</a>
+        <a href="components.html" >Components</a>
+        <a href="component-composition.html" >Component Composition</a>
+        <a href="serialization-declaration.html" >Serialization Declaration</a>
+        <a href="montagejs-objects.html" >Objects</a>
+        <a href="data-binding.html" >Data Binding</a>
+        <a href="event-handling.html" >Event Handling</a>
+        <a href="draw-cycle.html" >Draw Cycle</a>
+        <a href="blueprints.html" >Blueprints</a>
+        <a href="gestures-composers.html" >Gestures & Composers</a>
+        <a href="naming-conventions.html" >Naming Conventions</a>
+    </details>
+
+    <details open>
+        <summary>Built-in Components</summary>
+        <a href="repetition.html" >Repetition</a>
+        <a href="substitution.html" >Substitution</a>
+        <a href="overlay.html" >Overlay</a>
+    </details>
+
+    <details open>
+        <summary>UI Component Sets</summary>
+        <a href="themes.html" >Introduction</a>
+        <a href="theme-digit-components.html" >Digit</a>
+        <a href="theme-matte-components.html" >Matte</a>
+        <a href="theme-native-components.html" >Native</a>
+        <a href="autocomplete.html" >Autocomplete</a>
+    </details>
+
+    <details open>
+        <summary>Tools</summary>
+        <a href="tools-minit.html" >Minit</a>
+        <a href="tools-mop.html" >Mop</a>
+    </details>
+
+    <details open>
+        <summary>Help</summary>
+        <a href="faq.html" >FAQ</a>
+        <a href="frb.html" >FAQ - FRB Transition</a>
+        <a href="troubleshooting.html" >Troubleshooting</a>
+    </details>
+
+    <hr />
+
+    <a class="sidenav-mainLink" href="/montage.org/api/Montage.html">API Reference</a>
+
+    <hr />
+
+</nav>
+
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/montagejs/git-subtree.md"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                <h1 id="git-subtree">git subtree</h1>
+
+<p>Git subtrees are like submodules, but better and easier for everyone involved. They allow you to import code from a different repository but instead of adding a <em>reference</em> to your repository, they add the <strong>actual code</strong> <em>and commit saying where the code came from</em>.</p>
+
+<p>The great thing about subtrees is if you do not care about merging or splitting them, they <strong>do not affect you</strong>. You can treat the whole repository as you would normally. If the above describes you, you can stop reading now.</p>
+
+<h2 id="installing">Installing</h2>
+
+<p>If you use OSX and homebrew, then <code class="highlighter-rouge">brew install git</code> will install the subtree command along with git.</p>
+
+<p>Otherwise it is a single script you can download:</p>
+
+<ol>
+  <li>Download https://raw.github.com/git/git/master/contrib/subtree/git-subtree.sh</li>
+  <li>Make executable: <code class="highlighter-rouge">chmod a+x git-subtree.sh</code></li>
+  <li>Rename to git-subtree: <code class="highlighter-rouge">mv git-subtree.sh git-subtree</code></li>
+  <li>Move to a directory on your <code class="highlighter-rouge">PATH</code></li>
+</ol>
+
+<h2 id="using">Using</h2>
+
+<p>Each section below has a description and example for each command, and a list of the subtrees in each of the montagejs repositories with the command that you can copy and paste. See the Adding section for an example of what a subtree looks like.</p>
+
+<h3 id="mergingpulling">Merging/pulling</h3>
+<p>This will merge updates from the other repository while keeping any changes made to the subtree locally (for example deleted files).</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git subtree pull <span class="nt">--squash</span> <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$dir$ </span>git@github.com:<span class="nv">$repo$.</span>git <span class="nv">$commitOrTag$ </span><span class="nt">-m</span> <span class="s2">"Update </span><span class="nv">$name$ </span><span class="s2">to </span><span class="nv">$version</span><span class="s2">$"</span>
+</code></pre></div></div>
+
+<h4 id="mr--montage">Mr ↣ Montage</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git subtree pull <span class="nt">--squash</span> <span class="nt">--prefix</span><span class="o">=</span>packages/mr git@github.com:montagejs/mr.git <span class="nv">$version</span> <span class="nt">-m</span> <span class="s2">"Update Mr to </span><span class="nv">$version</span><span class="s2">$"</span>
+</code></pre></div></div>
+
+<h4 id="q--mr">Q ↣ Mr</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git subtree pull <span class="nt">--squash</span> <span class="nt">--prefix</span><span class="o">=</span>packages/q git@github.com:kriskowal/q.git <span class="nv">$version</span> <span class="nt">-m</span> <span class="s2">"Update Q to </span><span class="nv">$version</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<h4 id="popcorn--montagejsorg">Popcorn ↣ montagejs.org</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git subtree pull <span class="nt">--squash</span> <span class="nt">--prefix</span><span class="o">=</span><span class="nb">source</span>/apps/popcorn git@github.com:montagejs/popcorn.git master <span class="nt">-m</span> <span class="s2">"Update Popcorn to master"</span>
+</code></pre></div></div>
+
+<h4 id="kitchen-sink--montagejsorg">Kitchen sink ↣ montagejs.org</h4>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git subtree pull <span class="nt">--squash</span> <span class="nt">--prefix</span><span class="o">=</span><span class="nb">source</span>/docs/kitchen-sink git@github.com:montagejs/kitchen-sink.git master <span class="nt">-m</span> <span class="s2">"Update Kitchen sink to master"</span>
+</code></pre></div></div>
+
+<h3 id="splitting">Splitting</h3>
+
+<p>Splitting allows you take take changes to the subtree from your repository and commit them to the other one.</p>
+
+<p>TODO: Write after splitting for the first time</p>
+
+<h3 id="adding">Adding</h3>
+
+<p>This will add all the files in <code class="highlighter-rouge">repo</code> at <code class="highlighter-rouge">commit</code> under <code class="highlighter-rouge">dir</code>, and will create 2 commits</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git subtree add <span class="nt">--squash</span> <span class="nt">--prefix</span><span class="o">=</span><span class="nv">$dir$ </span>git@github.com:<span class="nv">$repo$.</span>git <span class="nv">$commitOrTag$ </span><span class="nt">-m</span> <span class="s2">"Add </span><span class="nv">$name$ $version$ </span><span class="s2">as a subtree"</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>commit 25303c2f71a7437f6cb4d8f2e277a2c0aca6040c
+Author: Stuart Knightley &lt;stuart@example.com&gt;
+Date:   Tue Jan 8 16:49:33 2013 +0000
+
+    Squashed 'packages/mr/' content from commit fb221b7
+    
+    git-subtree-dir: packages/mr
+    git-subtree-split: fb221b7322e581ab63aa5a8bdbf8ae5579c6b06c
+
+commit f3cf33549b20e42da24bd55c211af8307092341a
+Merge: 3e6a9e2 25303c2
+Author: Stuart Knightley &lt;stuart@example.com&gt;
+Date:   Tue Jan 8 16:49:33 2013 +0000
+
+    Add Mr v0.12.0 as a subtree
+</code></pre></div></div>
+
+            </article>
+        </div>
+    </div>
+</section>
+
+
+  <footer class="footer">
+
+    <div class="wrapper">
+
+      <ul class="sitemap">
+            <li>
+                <a href="http://montage.org/gallery/" class="sitemap-main">Gallery</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/product/" class="sitemap-main">Product</a>
+                <a href="/montage.org/montage-studio/ide-at-a-glance.html">Overview</a>
+                <a href="/montage.org/montage-studio/tutorial-simple-to-do.html">Quick Start</a>
+                <a href="/montage.org/montage-studio/faq.html">FAQ</a>
+            </li> -->
+            <li>
+                <a href="http://montage.org/montagejs" class="sitemap-main">Open Source</a>
+                <a href="/montage.org/montagejs/">Docs</a>
+                <a href="/montage.org/montagejs/montagejs-setup.html">Quick Start</a>
+                <a href="/montage.org/montagejs/montagejs-examples.html">Examples</a>
+                <a href="/montage.org/api/AbstractButton.html">API</a>
+                <a href="/montage.org/montagejs/faq.html">FAQ</a>
+            </li>
+            <li>
+                <!-- <a href="http://montage.org/community" class="sitemap-main">Community</a> -->
+                <!-- <a href="http://forum.montage.org/">Forum</a> -->
+                <!-- <a href="http://montage.org/blog/events/">Events</a> -->
+                <a href="https://gitter.im/montagejs" target="_blank">Gitter</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/blog/" class="sitemap-main">Blog</a>
+            </li> -->
+            <li>
+                <a href="https://en.wikipedia.org/wiki/MontageJS">History</a>
+                <!-- <a href="http://montage.org/press/">Press</a> -->
+                <!-- <a href="http://montage.org/contact-us/">Contact us</a> -->
+            </li>
+      </ul>
+
+        <a href="http://montage.org/" class="footer-logo"></a>
+
+      <p class="footer-end">2010–2018 Motorola, Montage Studio, Pacific Disaster Center, Kaazing</p>
+    </div>
+
+    </footer>
+
+
+  <!-- Google -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35717912-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

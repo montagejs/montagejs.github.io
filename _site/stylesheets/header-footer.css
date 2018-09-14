@@ -1,0 +1,354 @@
+/* These Styles are for the header and footer.
+ * Note: They will also be used on subdomains, like engage, docs etc.
+ */
+
+
+/* Header ----------------------------------------- */
+
+.header {
+    padding: 0px 40px;
+    text-align: left;
+    background-color: #fff; /* should make it scroll faster */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.header-container {
+    max-width: 1080px;
+    position: relative;
+    margin: 0 auto;
+}
+
+.header .logo {
+    display: block;
+    position: absolute;
+    top: 10px;
+    height: 40px;
+    background-image: url(../images/montage-badge.svg);
+    color: transparent;
+    text-shadow: none;
+    width: 140px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 100%;
+}
+
+.header .logo:hover {
+    opacity: .9;
+}
+
+.header .logo:active {
+    opacity: .8;
+}
+
+
+/* Nav ----------------------------------------- */
+
+.nav {
+    display: block;
+    margin: 0 174px 0 150px; /* These magic numbers depend on logo and teaser widths */
+    font-size: 0; /* Removes inline-block gap */
+    text-align: center;
+}
+
+.nav-item {
+    display: inline-block;
+    font-size: 15px;
+    margin: 0;
+    padding: 20px 15px;
+    color: #212121; /* original color = hsla(0, 0%, 70%, 1); */
+    text-decoration: none;
+}
+
+.nav-item:hover {
+    color: hsl(0,0%,100%);
+    background-color: hsla(0, 0%, 15%, 0.69); /* hsla(0, 100%, 100%, 0.06); */
+}
+
+.nav-item:active,
+.nav-item.active {
+    color: #fff;
+    background-color: hsla(0,0%,0%,0.2);
+}
+
+
+
+/* Nav Teaser ----------------------------------------- */
+
+.nav-item--teaser {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #fff;
+    background: #479dd8 linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1)); 
+}
+
+.nav-item--teaser:hover {
+    background-color: hsl(204, 65%, 60%);
+}
+
+.nav-item--teaser:active,
+.nav-item--teaser.active {
+    background-color: hsl(204, 65%, 36%);
+}
+
+
+
+
+/* Nav toggle ----------------------------------------- */
+
+.nav-toggleLabel {
+    cursor: pointer;
+    width: 100%;
+    height: 48px;
+    padding: 0 50px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 48px;
+    color: #fff;
+    text-align: right;
+    -webkit-tap-highlight-color: transparent;
+    background:  url(http://staging.montagestudio.com/assets/images/toggle-icons.svg) no-repeat right top;
+    background-size: 48px auto;
+}
+
+.nav-toggleLabel:active {
+    background-color: hsl(0, 0%, 16%);
+}
+
+.nav-toggle:checked + .nav-toggleLabel {
+    color: hsl(0,0%,66%);
+    background-position: right -48px;
+}
+
+.nav-toggle:checked + .nav-toggleLabel:before { content: "Close"; }
+
+
+/* Main nav */
+
+.nav-toggle--main:checked ~ .nav {
+    display: block;
+}
+
+.nav-toggleLabel--main:before { content: "Menu"; }
+
+
+.nav-toggle,
+.nav-toggleLabel {
+    display: none;
+}
+
+
+/* Main nav */
+
+.nav-toggle--main:checked ~ .nav {
+    display: block;
+}
+
+.nav-toggleLabel--main:before { content: "Menu"; }
+
+
+
+/* Subnav ---------------------------------------------------------------------------------- */
+
+.subnav {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1em;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.subnav a {
+    display: inline-block;
+    color: #8b8a8a;
+    margin: 0.5em;
+}
+
+.subnav a:hover {
+    color: hsl(0, 0%, 70%);
+}
+
+.subnav a:active,
+.subnav a.active {
+    color: hsl(0, 0%, 30%);
+}
+
+
+
+
+/* Footer ---------------------------------------------------------------------------------- */
+
+.footer {
+    padding: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+@media all and (min-width: 801px) {
+    .footer {
+        padding: 60px;
+    }
+}
+
+
+/* Sitemap */
+
+/* Sitemap */
+
+.sitemap {
+    list-style: none;
+    margin: 0 0 0 170px;
+    padding: 0;
+    font-size: 0.9em;
+}
+
+.sitemap li {
+    display: inline-block;
+    margin: 0 2em;
+    vertical-align: top;
+    text-align: left;
+}
+
+.sitemap a {
+    display: block;
+    color: hsla(0, 100%, 100%, 0.6);
+    text-decoration: none;
+}
+
+.sitemap a:hover {
+    color: hsla(0, 100%, 100%, 1);
+}
+
+.sitemap a:active {
+    color: hsla(0, 100%, 100%, 0.6);
+}
+
+.sitemap .sitemap-main {
+    margin-bottom: 0.5em;
+    font-size: 1.2em;
+    color: #fff;
+}
+
+.sitemap .sitemap-main:hover {
+    color: hsla(0, 100%, 100%, 0.6);
+}
+
+.sitemap .sitemap-main:active {
+    color: hsla(0, 100%, 100%, 0.4);
+}
+
+.footer-logo {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    left: 0;
+    top: 5px;
+    background: url(../images/MontageSymbol.svg) no-repeat left top;
+    background-size: 100% auto;
+}
+
+.footer-end {
+    padding-top: 2em;
+    color: hsla(0, 100%, 100%, 0.4);
+    font-size: .8em;
+}
+
+@media all and (max-width: 920px) {
+
+    .footer-logo {
+        display: block;
+        position: relative;
+        left: auto;
+        top: auto;
+        margin: 2em auto 0em auto;
+    }
+
+    .sitemap {
+        margin: 0;
+    }
+
+    .sitemap li {
+        margin: 0 1em;
+    }
+}
+
+@media all and (min-width: 701px) {
+
+    .footer {
+        background: #181724 url(http://staging.montagestudio.com/assets/images/bg-footer.jpg) no-repeat top center;
+        background-size: auto 100%;
+    }
+
+}
+
+@media all and (max-width: 700px) {
+
+    .subnav {
+        position: relative;
+    }
+
+    .footer {
+        background: #181724 url(http://staging.montagestudio.com/assets/images/bg-footer--vertical.jpg) no-repeat top center;
+        background-size: 100% auto;
+    }
+
+    .sitemap {
+        font-size: 1.2em;
+        line-height: 1.6;
+    }
+
+    .sitemap li {
+        display: block;
+        margin: 1.5em 0;
+    }
+}
+
+
+/* Responsive Header ----------------------------------------- */
+
+@media all and (max-width: 1040px) { /* width needs to be manually adjusted if nav changes */
+
+    body > section:first-of-type {
+        margin-top: 0px;
+    }
+
+    .header {
+        /*position: relative;*/
+        padding: 0.4em 0;
+        font-size: 1.5em;
+    }
+
+    .header .logo {
+
+        position: absolute;
+        top: 5px;
+        left: 15px;
+}
+
+    .nav-toggleLabel--main {
+        display: block;
+    }
+
+    .nav {
+        display: none;
+        margin: 0;
+        padding: 10px 0 0 0;
+        text-align: center;
+    }
+    .nav-item {
+        padding: 10px;
+    }
+
+    .nav-item--teaser {
+        position: relative;
+    }
+
+}
+

@@ -1,0 +1,368 @@
+/* These Styles only get used on sub-pages */
+
+
+/* with Subnav ----------------------------------------- */
+
+
+
+.withSidenav .main {
+    position: relative;
+    float: right;
+    width: 75%;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.withSidenav .content {
+    background: #fff;
+    padding: 10px 30px 30px 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 2px hsla(0, 0%, 0%, 0.12);
+}
+
+.withSidenav .comments {
+    padding-top: 2em;
+}
+
+.withSidenav .wrapper:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+
+/* Subnav ----------------------------------------- */
+
+.sidenav {
+    float: left;
+    width: 25%;
+    padding-right: 20px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.sidenav details[open] {
+    padding: 0 0 20px 0;
+}
+
+.sidenav summary {
+    padding: 5px 0;
+    outline: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: hsl(0, 0%, 30%);
+}
+
+.sidenav a {
+    display: block;
+    margin-left: 5px;
+    padding: 5px 5px 5px 13px;
+    border-left: 2px solid hsl(210,75%,70%);
+    font-size: 14px;
+    line-height: 1.3;
+    color: hsl(0,0%,30%);
+}
+
+.sidenav a:hover {
+    color: hsl(0, 0%, 20%);
+    background-color: hsl(210,75%,92%);
+    border-color: hsl(210,75%,57%);
+    text-shadow: none;
+}
+
+.sidenav a:active,
+.sidenav a.active {
+    color: hsl(0,0%,100%);
+    text-shadow: none;
+    border-left-color: transparent;
+    background-color: hsl(210,75%,57%);
+}
+
+.sidenav a[target="_blank"]:after {
+     content: "";
+     display: inline-block;
+     margin-left: 4px;
+     width: 8px;
+     height: 8px;
+     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABJElEQVQ4EY1SwWrCQBB1jSHQkxe/wv5ET+3FDxD8iuBBgiUJgfRQsZCL3+BXaD+iR496kRw8WLo1SfteYGEJg8nAZGbn7Xsz2V0VhmESRdFrT7A4jn2UV3AlwHWpr5RaQuBd2gDxdVVVU2Bawlnr8wOROboNmTcN9S1qL/BLE+O6FpAAu4ZJ9mVZTlC72XXmnQSCIBg5jrPBfhf+Q6KxVgGSPc/bgTCGfxVF8Yj42UmgSdZaPyVJcsjz/BkCPJvewCg1o0RO0/TMfVmWaRz8FLd3EgXukU2jPxhyXzwD13VnAOt/5timsyHbURTA3X/gAfltZAqJv0CAIoxtJk7QRrJxe4IHdP21wXs5Xuc3cXuCI9bXro4rfKOAPQHXnQ3vYIGJb/8a4nf/5LC60AAAAABJRU5ErkJggg==) no-repeat center;
+     background-size: 8px;
+}
+
+.sidenav .sidenav-mainLink {
+    font-size: 18px;
+}
+
+.sidenav hr {
+    margin: 1em 0 2em 0;
+}
+
+.sidenav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidenav input[type="search"] {
+    padding: 0.4em 0.6em;
+    border-radius: 2em;
+    margin-bottom: 20px;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    font-size: .9em;
+    box-shadow: inset 0 1px 2px hsla(0,0%,0%,.1), 0 1px 0px hsla(0,0%,100%,0.3);
+    border: 1px solid hsla(0,0%,0%,0.15);
+    background: hsla(0,0%,0%,.04);
+}
+
+.sidenav input[type="search"]:focus {
+    outline: none;
+    border-color: hsl(210,75%,57%);
+    background: transparent;
+}
+
+.sidenav--noDetails {
+    margin-bottom: 20px;
+}
+
+.sidenav--noDetails a {
+    margin-left: 0;
+}
+
+
+/* Content ----------------------------------------- */
+
+.content img {
+    max-width: 100%;
+}
+
+.content ol li {
+    margin: 1em 0;
+}
+
+.content ul li {
+    margin: .3em 0;
+}
+
+.content h2 {
+    border-bottom: 1px solid hsl(0,0%,90%);
+    padding-bottom: .3em;
+}
+
+.content h2,
+.content h3,
+.content h4 {
+    margin: 1.6em 0 .4em 0;
+}
+
+.content h4 + ul,
+.content h4 + p {
+    margin-top: 0;
+}
+
+
+/* Figure */
+
+.content figcaption {
+    padding: .5em 0;
+    font-size: .9em;
+    font-style: italic;
+    color: hsl(0,0%,50%);
+}
+
+.content table {
+    margin-bottom: 1em;
+    font-size: .94em;
+    line-height: 1.3;
+    border: 1px solid hsl(0,0%,92%);
+    border-width: 0 1px 1px 0;
+}
+
+.content thead {
+    background: hsl(208,60%,97%);
+}
+
+.content tr:nth-child(even) {
+    background: hsl(0,0%,97%);
+}
+
+.content th,
+.content td {
+    padding: .6em .8em;
+    border: 1px solid hsl(0,0%,92%);
+    border-width: 1px 0 0 1px;
+}
+
+/* Code ----------------------------------------- */
+
+/* Inline */
+
+:not(pre) > code {
+    color: hsl(0, 0%, 35%);
+    background-color: rgba(0,0,0,0.04);
+    border-radius: 3px;
+    font-size: 0.85em;
+    padding: .15em;
+}
+
+/* Block: hljs = GitHub MD, prettyprint = JSDoc  */
+
+.hljs,
+.prettyprint {
+    display: block;
+    position: relative;
+    margin: 1em 0;
+    padding: 20px;
+    font-size: .9em;
+    line-height: 1.3;
+    border-radius: 6px;
+    border: 1px solid hsl(0, 0%, 88%);
+    background-color: hsl(0, 0%, 98%);
+    color: hsl(0, 0%, 50%);
+    box-shadow: inset 0 1px 3px hsla(0, 0%, 0%, 0.04), 0 1px 0 hsla(0, 0%, 100%, 0.6);
+}
+
+.hljs > pre {
+    margin: 0;
+}
+
+.hljs em {
+    color: #545454;
+    font-weight: bold;
+}
+
+/* Edit this ----------------------------------------- */
+
+.docs .edit {
+    position: absolute;
+    padding: 0 1em;
+    top: 0;
+    right: 0;
+    line-height: 2em;
+    font-size: .8em;
+    color: hsla(0,0%,0%,0.4);
+    border-radius: 0 8px;
+    text-shadow: none;
+    border: 1px solid hsl(0,0%,90%);
+    border-width: 0 0 1px 1px;
+}
+
+.docs .edit:hover {
+    background: hsl(0,0%,96%);
+}
+
+.docs .edit:active {
+    background: hsl(0,0%,100%);
+}
+
+.docs .button.disabled {
+    visibility: hidden;
+}
+
+
+/* 404 ----------------------------------------- */
+
+.title-404 {
+    font-size: 8em;
+    text-align: center;
+    line-height: 0;
+    color: hsl(0,0%,80%);
+}
+
+
+
+
+/* Responsive Submenu ----------------------------------------- */
+
+.sidenav-toggle {
+    display: none;
+}
+
+@media all and (max-width: 700px) {
+
+    .sidenav {
+        float: none;
+        width: 100%;
+        padding-right: 0;
+        text-align: center;
+    }
+
+    .sidenav a {
+        font-size: 18px;
+        line-height: 1.8;
+        margin-left: 0;
+    }
+
+    .sidenav summary {
+        margin-bottom: 10px;
+        border-radius: 8px;
+        padding: 10px 0;
+        box-shadow: 0 0 2px hsla(0, 0%, 0%, 0.12);
+        background: hsl(0,0%,100%);
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .sidenav summary:active {
+        background-color: hsl(0, 0%, 90%);
+    }
+
+    section.withSidenav {
+        padding: 10px;
+    }
+
+    .withSidenav .main {
+        width: 100%;
+    }
+
+    .withSidenav .content {
+        padding: 1px 20px 20px 20px;
+    }
+
+    .sidenav {
+        display: none;
+    }
+
+
+    .sidenav-toggleLabel {
+        cursor: pointer;
+        width: 100%;
+        height: 48px;
+        padding: 0 50px;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        line-height: 48px;
+        font-size: 1.2em;
+        color: hsl(220, 100%, 66%);
+        text-align: center;
+        border-radius: 8px;
+        -webkit-tap-highlight-color: transparent;
+        box-shadow: 0 0 2px hsla(0, 0%, 0%, 0.12);
+        background: #fff url(../images/toggle-icons.svg) no-repeat right top;
+        background-size: 48px auto;
+    }
+
+    .sidenav-toggleLabel:active {
+        background-color: hsl(0, 0%, 90%);
+    }
+
+    .sidenav-toggle:checked + .sidenav-toggleLabel {
+        color: hsl(0,0%,66%);
+        background-position: right -48px;
+    }
+
+    .sidenav-toggle:checked + .sidenav-toggleLabel:before { content: "Close"; }
+
+
+    .sidenav-toggle:checked ~ .sidenav {
+        display: block;
+    }
+
+    .sidenav-toggleLabel {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .sidenav-toggleLabel:before { content: "Sub Menu"; }
+
+}
+

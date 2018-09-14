@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>Native - MontageJS Theme</title>
+
+    <link rel="stylesheet" href="/montage.org/stylesheets/base.css">
+
+    <!--highlight.js-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="header-container">
+        <a class="logo" href="http://montage.org/">Home</a>
+
+        <input id="nav-toggle" class="nav-toggle nav-toggle--main" type="checkbox">
+        <label class="nav-toggleLabel nav-toggleLabel--main" for="nav-toggle" onclick></label>
+
+        <nav class="nav">
+            <a class="nav-item" href="#">Montage</a>
+        </nav>
+    </div>
+</header>
+
+
+
+  <section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+            
+<input id="sidenav-toggle" class="sidenav-toggle" type="checkbox">
+<label class="sidenav-toggleLabel" for="sidenav-toggle" onclick></label>
+
+        <nav class="sidenav">
+
+    <details open>
+        <summary>Quick Start</summary>
+        <a href="montagejs-setup.html" >Set Up</a>
+        <a href="hello-montage.html" >Hello Montage</a>
+    </details>
+
+    <details open>
+        <summary>Demos</summary>
+        <a href="montagejs-examples.html" >Examples</a>
+        <a href="http://montagejs.github.com/mfiddle/" target="_blank">Mfiddle</a>
+
+    </details>
+
+    <details open>
+        <summary>Tutorials</summary>
+        <a href="tutorial-using-substitutions-with-montagejs.html" >Using Substitutions</a>
+        <a href="tutorial-reddit-client-with-montagejs.html" >Building a Reddit Client</a>
+        <a href="tutorial-3d-applications-with-montagejs.html" >Building 3D Applications</a>
+    </details>
+
+    <details open>
+        <summary>Concepts</summary>
+        <a href="bootstrapping.html" >Bootstrapping</a>
+        <a href="application.html" >Application</a>
+        <a href="montagejs-templates.html" >Templates</a>
+        <a href="components.html" >Components</a>
+        <a href="component-composition.html" >Component Composition</a>
+        <a href="serialization-declaration.html" >Serialization Declaration</a>
+        <a href="montagejs-objects.html" >Objects</a>
+        <a href="data-binding.html" >Data Binding</a>
+        <a href="event-handling.html" >Event Handling</a>
+        <a href="draw-cycle.html" >Draw Cycle</a>
+        <a href="blueprints.html" >Blueprints</a>
+        <a href="gestures-composers.html" >Gestures & Composers</a>
+        <a href="naming-conventions.html" >Naming Conventions</a>
+    </details>
+
+    <details open>
+        <summary>Built-in Components</summary>
+        <a href="repetition.html" >Repetition</a>
+        <a href="substitution.html" >Substitution</a>
+        <a href="overlay.html" >Overlay</a>
+    </details>
+
+    <details open>
+        <summary>UI Component Sets</summary>
+        <a href="themes.html" >Introduction</a>
+        <a href="theme-digit-components.html" >Digit</a>
+        <a href="theme-matte-components.html" >Matte</a>
+        <a href="theme-native-components.html" class="active">Native</a>
+        <a href="autocomplete.html" >Autocomplete</a>
+    </details>
+
+    <details open>
+        <summary>Tools</summary>
+        <a href="tools-minit.html" >Minit</a>
+        <a href="tools-mop.html" >Mop</a>
+    </details>
+
+    <details open>
+        <summary>Help</summary>
+        <a href="faq.html" >FAQ</a>
+        <a href="frb.html" >FAQ - FRB Transition</a>
+        <a href="troubleshooting.html" >Troubleshooting</a>
+    </details>
+
+    <hr />
+
+    <a class="sidenav-mainLink" href="/montage.org/api/Montage.html">API Reference</a>
+
+    <hr />
+
+</nav>
+
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/montagejs/theme-native-components.md"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                <h1 id="native-theme">Native Theme</h1>
+
+<p>The Native set uses the browser’s default styles. Use this set if you want to custom design your user interface components yet still gain access to MontageJS features such as data binding and the MontageJS event handling model.</p>
+
+<p><img src="../montage.org/images/themes/native.png" alt="Native" /></p>
+
+<h2 id="benefits">Benefits</h2>
+<p>MontageJS native components support the same powerful binding and event listener models as the Digit and Matte themes. They also have the following benefits:</p>
+
+<ul>
+  <li>
+    <p><strong>Smaller footprint</strong>: Custom components often include a number of elements to achieve the desired styling. In addition to the extra markup, the additional component CSS also has to be downloaded.</p>
+  </li>
+  <li>
+    <p><strong>Easier styling</strong>: If you would like to adjust the look and feel of custom components to either fit a different theme or be optimized for typical desktop-style applications, you have to download the component CSS and then add additional styles to override and build upon the current styles. With native components you only have to override the default user-agent/browser styles.</p>
+  </li>
+</ul>
+
+<h2 id="available-components">Available Components</h2>
+<p>The following list summarizes the UI components that are currently part of the Native widget set:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Component</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/anchor.reel" target="_blank">Anchor</a></td>
+      <td>Provides hyperlink functionality. It acts as a wrapper around the <code class="highlighter-rouge">a</code> element.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/button.reel" target="_blank">Button</a></td>
+      <td>Provides button functionality. It wraps either a <code class="highlighter-rouge">button</code> element or an <code class="highlighter-rouge">input</code> element with type of <code class="highlighter-rouge">button</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/image.reel" target="_blank">Image</a></td>
+      <td>Provides functionality for displaying an image. It wraps the <code class="highlighter-rouge">img</code> element.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/input-checkbox.reel" target="_blank">InputCheckbox</a></td>
+      <td>Provides checkbox functionality. It wraps an <code class="highlighter-rouge">input</code> element with type of <code class="highlighter-rouge">checkbox</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/input-date.reel" target="_blank">InputDate</a></td>
+      <td>Provides date functionality. It wraps a <code class="highlighter-rouge">input</code> element with type of <code class="highlighter-rouge">date</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/input-number.reel" target="_blank">InputNumber</a></td>
+      <td>Provides functionality for entering a number in a text field. This typically includes a spinner control attached to the text field. It wraps the <code class="highlighter-rouge">input</code> element with type of <code class="highlighter-rouge">number</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/input-radio.reel" target="_blank">InputRadio</a></td>
+      <td>Provides radio button functionality. It wraps the <code class="highlighter-rouge">input</code> element with type of <code class="highlighter-rouge">radio</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/input-range.reel" target="_blank">InputRange</a></td>
+      <td>Provides slider functionality. It wraps the <code class="highlighter-rouge">input</code> element with type of <code class="highlighter-rouge">range</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/input-text.reel" target="_blank">InputText</a></td>
+      <td>Provides functionality for a single-line text field. It wraps the <code class="highlighter-rouge">input</code> element with a type of <code class="highlighter-rouge">text</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/progress.reel" target="_blank">Progress</a></td>
+      <td>Provides progress bar functionality. It wraps the <code class="highlighter-rouge">progress</code> element.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/select.reel" target="_blank">Select</a></td>
+      <td>Provides drop-down list functionality in MontageJS. It wraps the <code class="highlighter-rouge">input</code> element with type of <code class="highlighter-rouge">select</code>.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/montagejs/native/tree/master/ui/textarea.reel" target="_blank">TextArea</a></td>
+      <td>Provides functionality for a multiline text field. It wraps the <code class="highlighter-rouge">textarea</code> element.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="installing-the-native-theme">Installing the Native Theme</h2>
+
+<p>The Native set is not included in the default project template. To use the Native components in your project, you have to install the set first:</p>
+
+<ol>
+  <li>
+    <p>Open a Terminal window and switch to your project directory.</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> cd yourprojectfolder
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>At the prompt enter:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ npm install native@latest --save
+</code></pre></div>    </div>
+
+    <p>The <code class="highlighter-rouge">--save</code> flag ensures that the native package is automatically added as a dependency to the package.json file of your application code.</p>
+  </li>
+</ol>
+
+<h2 id="using-the-native-theme">Using the Native Theme</h2>
+
+<p>You can use Native components in almost the same way as the Digit and Matte components. The main differences are: you will have to provide the styling yourself and you need to specify the actual element in your HTML file, rather than using a placeholder element. The hooks for adding the serialization and so on are the same.</p>
+
+<p>For example, here is an HTML button hooked up as a Button component:</p>
+
+<p><strong>HTML body</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="na">data-montage-id=</span><span class="s">"button"</span><span class="nt">&gt;</span>I'm a native button<span class="nt">&lt;/button&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Serialization</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"button"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"prototype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"native/ui/button.reel"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"button"</span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="using-bindings">Using Bindings</h3>
+<p>The following example adds a range slider that is hooked up to an InputRange component, and an empty <code class="highlighter-rouge">output</code> element, which is hooked up to a Text component. The Text component is bound to the slider and its value is set to be the value of the slider. If you move the slider you will see that the value is put into the output element and kept in sync. The slider value is initially set to 0 as the bindings are two-way and the Text component initializes it as 0.</p>
+
+<p><strong>HTML body</strong></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;h1&gt;</span>Pump up the volume<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;form&gt;</span>
+    <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"slider1"</span><span class="nt">&gt;</span>Volume<span class="nt">&lt;/label&gt;</span>
+    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"range"</span> <span class="na">data-montage-id=</span><span class="s">"slider1"</span> <span class="na">min=</span><span class="s">"0"</span> <span class="na">max=</span><span class="s">"11"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;output</span> <span class="na">for=</span><span class="s">"slider1"</span> <span class="na">data-montage-id=</span><span class="s">"volume"</span><span class="nt">&gt;&lt;/output&gt;</span>
+<span class="nt">&lt;/form&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Serialization</strong></p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="w">    </span><span class="s2">"slider"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"module"</span><span class="p">:</span><span class="w"> </span><span class="s2">"native/ui/input-range.reel"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"InputRange"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"slider1"</span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"bindings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"&lt;-&gt;"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@output.value"</span><span class="p">}</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"output"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"module"</span><span class="p">:</span><span class="w"> </span><span class="s2">"native/ui/text.reel"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Text"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"volume"</span><span class="p">},</span><span class="w">
+            </span><span class="s2">"value"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+         </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="native-component-state">Native Component State</h2>
+<p>In the example above two attributes are set on the slider: <code class="highlighter-rouge">min</code> and <code class="highlighter-rouge">max</code>. These attributes map to the <code class="highlighter-rouge">min</code> and <code class="highlighter-rouge">max</code> properties of the InputRange component. All nondeprecated standard attributes map in this way to a component property. This includes <a href="http://dev.w3.org/html5/markup/global-attributes.html" target="_blank">global attributes</a> as well as attributes specific to each element. All of these properties can be used in bindings.</p>
+
+<p>As these two attributes were specified in the original HTML (rather than with a script later), they are available at serialization time and thus the values are stored in their equivalent MontageJS properties.</p>
+
+<p>If the attributes are updated later, after serialization takes place, the new values will not be synced with the MontageJS properties and the model and view will get out of sync. To avoid expensive reflow, it is better to update the component properties directly, rather than mutating the DOM, as this will keep things in sync. This potentially also gives you performance gains as DOM manipulation can be performance sensitive, and MontageJS can optimize how it interacts with the DOM.</p>
+
+<p>The following example shows how to set the <code class="highlighter-rouge">min</code> and <code class="highlighter-rouge">max</code> properties in the serialization rather than using attributes in the HTML. In this particular case adding via HTML would be fine as they’re added before serialization happens, but it is worth showing how to set it in this manor.</p>
+
+<p>In this example the HTML stays the same, except the range slider:</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"range"</span> <span class="na">data-montage-id=</span><span class="s">"testSlider"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>Then the properties section of the slider serialization is updated to add the two new min and max properties:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">…</span><span class="w">
+</span><span class="s2">"slider"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"module"</span><span class="p">:</span><span class="w"> </span><span class="s2">"native/ui/input-range.reel"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"InputRange"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"testSlider"</span><span class="p">},</span><span class="w">
+        </span><span class="s2">"min"</span><span class="p">:</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"max"</span><span class="p">:</span><span class="w"> </span><span class="mi">20</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+</span><span class="err">…</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="handling-events">Handling Events</h2>
+<p>As shown above, using bindings with Native components works them same using bindings with Digit and Matte components. This also holds true for handling events. As such I wont talk about it here, but you can view our <a href="http://montagejs.org/docs/event-handling.html">documentation</a> on events. If you follow the instructions there it will also work with your native components.</p>
+
+            </article>
+        </div>
+    </div>
+</section>
+
+
+  <footer class="footer">
+
+    <div class="wrapper">
+
+      <ul class="sitemap">
+            <li>
+                <a href="http://montage.org/gallery/" class="sitemap-main">Gallery</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/product/" class="sitemap-main">Product</a>
+                <a href="/montage.org/montage-studio/ide-at-a-glance.html">Overview</a>
+                <a href="/montage.org/montage-studio/tutorial-simple-to-do.html">Quick Start</a>
+                <a href="/montage.org/montage-studio/faq.html">FAQ</a>
+            </li> -->
+            <li>
+                <a href="http://montage.org/montagejs" class="sitemap-main">Open Source</a>
+                <a href="/montage.org/montagejs/">Docs</a>
+                <a href="/montage.org/montagejs/montagejs-setup.html">Quick Start</a>
+                <a href="/montage.org/montagejs/montagejs-examples.html">Examples</a>
+                <a href="/montage.org/api/AbstractButton.html">API</a>
+                <a href="/montage.org/montagejs/faq.html">FAQ</a>
+            </li>
+            <li>
+                <!-- <a href="http://montage.org/community" class="sitemap-main">Community</a> -->
+                <!-- <a href="http://forum.montage.org/">Forum</a> -->
+                <!-- <a href="http://montage.org/blog/events/">Events</a> -->
+                <a href="https://gitter.im/montagejs" target="_blank">Gitter</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/blog/" class="sitemap-main">Blog</a>
+            </li> -->
+            <li>
+                <a href="https://en.wikipedia.org/wiki/MontageJS">History</a>
+                <!-- <a href="http://montage.org/press/">Press</a> -->
+                <!-- <a href="http://montage.org/contact-us/">Contact us</a> -->
+            </li>
+      </ul>
+
+        <a href="http://montage.org/" class="footer-logo"></a>
+
+      <p class="footer-end">2010–2018 Motorola, Montage Studio, Pacific Disaster Center, Kaazing</p>
+    </div>
+
+    </footer>
+
+
+  <!-- Google -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35717912-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

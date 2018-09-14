@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>Rich Text Editor</title>
+
+    <link rel="stylesheet" href="/montage.org/stylesheets/base.css">
+
+    <!--highlight.js-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="header-container">
+        <a class="logo" href="http://montage.org/">Home</a>
+
+        <input id="nav-toggle" class="nav-toggle nav-toggle--main" type="checkbox">
+        <label class="nav-toggleLabel nav-toggleLabel--main" for="nav-toggle" onclick></label>
+
+        <nav class="nav">
+            <a class="nav-item" href="#">Montage</a>
+        </nav>
+    </div>
+</header>
+
+
+
+  <section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+            
+<input id="sidenav-toggle" class="sidenav-toggle" type="checkbox">
+<label class="sidenav-toggleLabel" for="sidenav-toggle" onclick></label>
+
+        <nav class="sidenav">
+
+    <details open>
+        <summary>Quick Start</summary>
+        <a href="montagejs-setup.html" >Set Up</a>
+        <a href="hello-montage.html" >Hello Montage</a>
+    </details>
+
+    <details open>
+        <summary>Demos</summary>
+        <a href="montagejs-examples.html" >Examples</a>
+        <a href="http://montagejs.github.com/mfiddle/" target="_blank">Mfiddle</a>
+
+    </details>
+
+    <details open>
+        <summary>Tutorials</summary>
+        <a href="tutorial-using-substitutions-with-montagejs.html" >Using Substitutions</a>
+        <a href="tutorial-reddit-client-with-montagejs.html" >Building a Reddit Client</a>
+        <a href="tutorial-3d-applications-with-montagejs.html" >Building 3D Applications</a>
+    </details>
+
+    <details open>
+        <summary>Concepts</summary>
+        <a href="bootstrapping.html" >Bootstrapping</a>
+        <a href="application.html" >Application</a>
+        <a href="montagejs-templates.html" >Templates</a>
+        <a href="components.html" >Components</a>
+        <a href="component-composition.html" >Component Composition</a>
+        <a href="serialization-declaration.html" >Serialization Declaration</a>
+        <a href="montagejs-objects.html" >Objects</a>
+        <a href="data-binding.html" >Data Binding</a>
+        <a href="event-handling.html" >Event Handling</a>
+        <a href="draw-cycle.html" >Draw Cycle</a>
+        <a href="blueprints.html" >Blueprints</a>
+        <a href="gestures-composers.html" >Gestures & Composers</a>
+        <a href="naming-conventions.html" >Naming Conventions</a>
+    </details>
+
+    <details open>
+        <summary>Built-in Components</summary>
+        <a href="repetition.html" >Repetition</a>
+        <a href="substitution.html" >Substitution</a>
+        <a href="overlay.html" >Overlay</a>
+    </details>
+
+    <details open>
+        <summary>UI Component Sets</summary>
+        <a href="themes.html" >Introduction</a>
+        <a href="theme-digit-components.html" >Digit</a>
+        <a href="theme-matte-components.html" >Matte</a>
+        <a href="theme-native-components.html" >Native</a>
+        <a href="autocomplete.html" >Autocomplete</a>
+    </details>
+
+    <details open>
+        <summary>Tools</summary>
+        <a href="tools-minit.html" >Minit</a>
+        <a href="tools-mop.html" >Mop</a>
+    </details>
+
+    <details open>
+        <summary>Help</summary>
+        <a href="faq.html" >FAQ</a>
+        <a href="frb.html" >FAQ - FRB Transition</a>
+        <a href="troubleshooting.html" >Troubleshooting</a>
+    </details>
+
+    <hr />
+
+    <a class="sidenav-mainLink" href="/montage.org/api/Montage.html">API Reference</a>
+
+    <hr />
+
+</nav>
+
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/montagejs/rich-text-editor.md"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                <h1 id="rich-text-editor">Rich Text Editor</h1>
+
+<p>The <code class="highlighter-rouge">RichTextEditor</code> component recently debuted in Montage 0.8. This provides a way for the user to enter text that will be transformed to HTML and can have styles applied to it.</p>
+
+<p>At its most basic level, the <code class="highlighter-rouge">RichTextEditor</code> is a wrapper around a <code class="highlighter-rouge">div</code> element with the HTML5 <code class="highlighter-rouge">contentEditable</code> attribute applied. There is no UI by default beyond the <code class="highlighter-rouge">div</code> for entering text, but an API is provided to allow you to hook up controls to enable the various styling options.</p>
+
+<h2 id="building-a-basic-rich-text-editor">Building a basic rich text editor</h2>
+<p>Creating a rich text editor with the very basic font and text styling controls can be done trivially with no JavaScript (beyond the JSON serialization) required! Lets make a quick example that allows us to make the text bold, italic and set an underline.</p>
+
+<h3 id="adding-the-markup">Adding the markup</h3>
+<p>First of all we need to create a toolbar with buttons for each of the options, and an area to enter the text:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;menu</span> <span class="na">type=</span><span class="s">"toolbar"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"montage-buttonGroup font-styles"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">data-montage-id=</span><span class="s">"bold"</span><span class="nt">&gt;</span>B<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">data-montage-id=</span><span class="s">"italic"</span><span class="nt">&gt;</span>I<span class="nt">&lt;/button&gt;</span>
+        <span class="nt">&lt;button</span> <span class="na">data-montage-id=</span><span class="s">"underline"</span><span class="nt">&gt;</span>U<span class="nt">&lt;/button&gt;</span>        
+    <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/menu&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">data-montage-id=</span><span class="s">"editor"</span> <span class="na">class=</span><span class="s">"montage-textarea"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>Hello RichText world!<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">menu</code> element holds the buttons we will use for styling the text. Montage doesn’t do anything special with this element; I’ve just included it for semantic value.</p>
+
+<p>Inside the menu I’ve included a wrapper <code class="highlighter-rouge">div</code> to group together the three text controls. I’ve applied a class to it so that the stylesheet can visually display the buttons as a group.</p>
+
+<p>Each button and the <code class="highlighter-rouge">div</code> element below the menu are given their own <code class="highlighter-rouge">data-montage-id</code> so we can hook them up to the serialization.</p>
+
+<p>Lets also add a <code class="highlighter-rouge">data-auto-package</code> attribute to the Montage script element, so that we don’t need to create a package.json file. As this example has no external dependencies, it is ideal for this:</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;script src="../montage/montage.js" data-auto-package&gt;&lt;/script&gt;
+</code></pre></div></div>
+
+<h3 id="hooking-the-toolbar-and-the-editor-to-the-serialization">Hooking the toolbar and the editor to the serialization</h3>
+<p>Now to where the magic really happens. Lets hook up the rich text editor to our <code class="highlighter-rouge">div</code> in our serialization code:</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"editor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"prototype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"montage/ui/rich-text-editor/rich-text-editor.reel"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"editor"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Now you have a text area that you can type into, but you can’t apply any commands. For that we have to hook up the buttons. Lets try with the bold button first:</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"bold"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"prototype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"montage/ui/toggle-button.reel"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"bold"</span><span class="p">},</span><span class="w">
+            </span><span class="s2">"pressedClass"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"bindings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"pressed"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"&lt;-&gt;"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@editor.bold"</span><span class="w"> </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>This sets the <code class="highlighter-rouge">bold</code> element to be a toggle button, and uses the <code class="highlighter-rouge">pressedClass</code> property to set a class of <code class="highlighter-rouge">active</code> when the button is pressed.</p>
+
+<p>When then set a two way binding between the <code class="highlighter-rouge">pressed</code> property and the <code class="highlighter-rouge">bold</code> boolean property of the <code class="highlighter-rouge">RichTextEditor</code> component. When the pressed property is updated it will change the bold value between <code class="highlighter-rouge">true</code> and <code class="highlighter-rouge">false</code>, and thus bold or unbold the text. When some text is selected that is already bold, it will update the pressed property of the toggle to set it to true.</p>
+
+<p>That is all there is to it for actions that update a boolean property such as bold, italic, and underline. Lets add the serialization for the other two buttons as well. They work in exactly the same way:</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"italic"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"prototype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"montage/ui/toggle-button.reel"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"italic"</span><span class="p">},</span><span class="w">
+        </span><span class="s2">"pressedClass"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"bindings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"pressed"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"&lt;-&gt;"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@editor.italic"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">},</span><span class="w">
+</span><span class="s2">"underline"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"prototype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"montage/ui/toggle-button.reel"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"underline"</span><span class="p">},</span><span class="w">
+        </span><span class="s2">"pressedClass"</span><span class="p">:</span><span class="w"> </span><span class="s2">"active"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="s2">"bindings"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"pressed"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"&lt;-&gt;"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@editor.underline"</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="getting-a-little-more-advanced">Getting a little more advanced</h2>
+<p>As you’ve just seen, setting boolean properties is a trivial affair. For properties that accept one of a number of predefined values, it becomes a little more complex, but wont be alien to those of you who know how Montage works.</p>
+
+<p>I’ll show you how to set this up by creating three buttons to set the text alignment to either left, right, or center, by updating the <code class="highlighter-rouge">justify</code> property.</p>
+
+<p>First of all we need to add the buttons to allow the user to specify the alignment. For this I added an additional button group. I’ve included the <a href="http://fortawesome.github.com/Font-Awesome/">Font Awesome</a> font that was designed to be used with Twitter Bootstrap to display icons for each button:</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"montage-buttonGroup alignment-styles"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">data-montage-id=</span><span class="s">"left"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"icon-align-left"</span> <span class="na">title=</span><span class="s">"left align"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">data-montage-id=</span><span class="s">"center"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"icon-align-center"</span> <span class="na">title=</span><span class="s">"center align"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>
+    <span class="nt">&lt;button</span> <span class="na">data-montage-id=</span><span class="s">"right"</span><span class="nt">&gt;&lt;i</span> <span class="na">class=</span><span class="s">"icon-align-right"</span> <span class="na">title=</span><span class="s">"right align"</span><span class="nt">&gt;&lt;/i&gt;&lt;/button&gt;</span>        
+<span class="nt">&lt;/div&gt;</span>
+</code></pre></div></div>
+
+<h3 id="setting-up-the-event-listeners-and-controller">Setting up the event listeners and controller</h3>
+<p>For this example we will need to add a controller object to the serialization, which will point to our <code class="highlighter-rouge">editor</code> object that we defined at the top of the serialization. This will give us access to this object when we need to use it in the controller object that we instantiate later in our JavaScript file.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"controller"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"prototype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Controller"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"editor"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="s2">"@"</span><span class="p">:</span><span class="w"> </span><span class="s2">"editor"</span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">    
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Now that we have a controller, we need to hook it up to the buttons that will handle the text alignment. All three serialization blocks are the same except the object name and the element they point to, so I’ll just include the serialization for the right button here. You can just repeat it for the other two buttons, editing the relevant values.</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s2">"right"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"prototype"</span><span class="p">:</span><span class="w"> </span><span class="s2">"montage/ui/toggle-button.reel"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"right"</span><span class="p">},</span><span class="w">
+            </span><span class="s2">"preventFocus"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+     </span><span class="s2">"listeners"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+       </span><span class="p">{</span><span class="w">
+         </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"action"</span><span class="p">,</span><span class="w">
+         </span><span class="s2">"listener"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"@"</span><span class="p">:</span><span class="w"> </span><span class="s2">"controller"</span><span class="p">}</span><span class="w">
+       </span><span class="p">}</span><span class="w">
+     </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Here we’re setting up an <code class="highlighter-rouge">action</code> listener, which will be handled via the controller object we just defined. As there is no <code class="highlighter-rouge">identifier</code> specified in the listener, the event listener will use the default name, which in this case is <code class="highlighter-rouge">handleRightListener</code>. This capitalizes the object name, and prefixes it with <code class="highlighter-rouge">handle</code>, and prepends it with <code class="highlighter-rouge">Action</code>.</p>
+
+<p>We also need to include a <code class="highlighter-rouge">preventFocus</code> property. This stops the button from taking focus away from the selected text in the rich text area. If we allowed the button to steal focus, the alignment style wouldn’t apply as it wouldn’t know what text it should apply the style to.</p>
+
+<h3 id="handling-the-action-events-in-javascript">Handling the action events in JavaScript</h3>
+<p>Now all the wiring is complete, when a user clicks the button for right alignment, it will fire the <code class="highlighter-rouge">handleRightAction</code> event. Lets create a JavaScript file called controller.js. This is the same name as set up in the controller object.</p>
+
+<p>Inside this file we first need to import Montage core, and create and export the <code class="highlighter-rouge">Controller</code> object. We also need to define the <code class="highlighter-rouge">editor</code> that we specified in our controller object in the serialization:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">Montage</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"montage/core/core"</span><span class="p">).</span><span class="nx">Montage</span><span class="p">;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">Controller</span> <span class="o">=</span> <span class="nx">Montage</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Montage</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">editor</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kc">null</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>Next we will define the <code class="highlighter-rouge">handleRightAction</code> method inside the same object. This sets the <code class="highlighter-rouge">editor.justify</code> property to right:</p>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">handleRightAction</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nl">value</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">editor</span><span class="p">.</span><span class="nx">justify</span> <span class="o">=</span> <span class="s2">"right"</span><span class="p">;</span>
+        <span class="k">this</span><span class="p">.</span><span class="nx">setActive</span><span class="p">(</span><span class="s2">"right"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>All of the other handlers can be created in the same way. The valid values for the <code class="highlighter-rouge">editor.justify</code> property are left, right, center, and full.</p>
+
+<p>As the active state for the left, right and center buttons should be mutually exclusive, I’ve also created an <code class="highlighter-rouge">setActive</code> method. This removes focus from the previously active button and adds focus to the currently selected button instead, rather than relying on the button’s inbuilt <code class="highlighter-rouge">pressedClass</code> property, like we did for the bold, italic and underline buttons.</p>
+
+<h2 id="wrap-up">Wrap up</h2>
+<p>Armed with this knowledge, you should be able hook up controls for the other <code class="highlighter-rouge">RichTextEditor</code> properties yourself. Hopefully this post will inspire you to try out the rich text capabilities in Montage for yourself.</p>
+
+            </article>
+        </div>
+    </div>
+</section>
+
+
+  <footer class="footer">
+
+    <div class="wrapper">
+
+      <ul class="sitemap">
+            <li>
+                <a href="http://montage.org/gallery/" class="sitemap-main">Gallery</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/product/" class="sitemap-main">Product</a>
+                <a href="/montage.org/montage-studio/ide-at-a-glance.html">Overview</a>
+                <a href="/montage.org/montage-studio/tutorial-simple-to-do.html">Quick Start</a>
+                <a href="/montage.org/montage-studio/faq.html">FAQ</a>
+            </li> -->
+            <li>
+                <a href="http://montage.org/montagejs" class="sitemap-main">Open Source</a>
+                <a href="/montage.org/montagejs/">Docs</a>
+                <a href="/montage.org/montagejs/montagejs-setup.html">Quick Start</a>
+                <a href="/montage.org/montagejs/montagejs-examples.html">Examples</a>
+                <a href="/montage.org/api/AbstractButton.html">API</a>
+                <a href="/montage.org/montagejs/faq.html">FAQ</a>
+            </li>
+            <li>
+                <!-- <a href="http://montage.org/community" class="sitemap-main">Community</a> -->
+                <!-- <a href="http://forum.montage.org/">Forum</a> -->
+                <!-- <a href="http://montage.org/blog/events/">Events</a> -->
+                <a href="https://gitter.im/montagejs" target="_blank">Gitter</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/blog/" class="sitemap-main">Blog</a>
+            </li> -->
+            <li>
+                <a href="https://en.wikipedia.org/wiki/MontageJS">History</a>
+                <!-- <a href="http://montage.org/press/">Press</a> -->
+                <!-- <a href="http://montage.org/contact-us/">Contact us</a> -->
+            </li>
+      </ul>
+
+        <a href="http://montage.org/" class="footer-logo"></a>
+
+      <p class="footer-end">2010–2018 Motorola, Montage Studio, Pacific Disaster Center, Kaazing</p>
+    </div>
+
+    </footer>
+
+
+  <!-- Google -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35717912-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>MontageJS Event Handling</title>
+
+    <link rel="stylesheet" href="/montage.org/stylesheets/base.css">
+
+    <!--highlight.js-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="header-container">
+        <a class="logo" href="http://montage.org/">Home</a>
+
+        <input id="nav-toggle" class="nav-toggle nav-toggle--main" type="checkbox">
+        <label class="nav-toggleLabel nav-toggleLabel--main" for="nav-toggle" onclick></label>
+
+        <nav class="nav">
+            <a class="nav-item" href="#">Montage</a>
+        </nav>
+    </div>
+</header>
+
+
+
+  <section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+            
+<input id="sidenav-toggle" class="sidenav-toggle" type="checkbox">
+<label class="sidenav-toggleLabel" for="sidenav-toggle" onclick></label>
+
+        <nav class="sidenav">
+
+    <details open>
+        <summary>Quick Start</summary>
+        <a href="montagejs-setup.html" >Set Up</a>
+        <a href="hello-montage.html" >Hello Montage</a>
+    </details>
+
+    <details open>
+        <summary>Demos</summary>
+        <a href="montagejs-examples.html" >Examples</a>
+        <a href="http://montagejs.github.com/mfiddle/" target="_blank">Mfiddle</a>
+
+    </details>
+
+    <details open>
+        <summary>Tutorials</summary>
+        <a href="tutorial-using-substitutions-with-montagejs.html" >Using Substitutions</a>
+        <a href="tutorial-reddit-client-with-montagejs.html" >Building a Reddit Client</a>
+        <a href="tutorial-3d-applications-with-montagejs.html" >Building 3D Applications</a>
+    </details>
+
+    <details open>
+        <summary>Concepts</summary>
+        <a href="bootstrapping.html" >Bootstrapping</a>
+        <a href="application.html" >Application</a>
+        <a href="montagejs-templates.html" >Templates</a>
+        <a href="components.html" >Components</a>
+        <a href="component-composition.html" >Component Composition</a>
+        <a href="serialization-declaration.html" >Serialization Declaration</a>
+        <a href="montagejs-objects.html" >Objects</a>
+        <a href="data-binding.html" >Data Binding</a>
+        <a href="event-handling.html" class="active">Event Handling</a>
+        <a href="draw-cycle.html" >Draw Cycle</a>
+        <a href="blueprints.html" >Blueprints</a>
+        <a href="gestures-composers.html" >Gestures & Composers</a>
+        <a href="naming-conventions.html" >Naming Conventions</a>
+    </details>
+
+    <details open>
+        <summary>Built-in Components</summary>
+        <a href="repetition.html" >Repetition</a>
+        <a href="substitution.html" >Substitution</a>
+        <a href="overlay.html" >Overlay</a>
+    </details>
+
+    <details open>
+        <summary>UI Component Sets</summary>
+        <a href="themes.html" >Introduction</a>
+        <a href="theme-digit-components.html" >Digit</a>
+        <a href="theme-matte-components.html" >Matte</a>
+        <a href="theme-native-components.html" >Native</a>
+        <a href="autocomplete.html" >Autocomplete</a>
+    </details>
+
+    <details open>
+        <summary>Tools</summary>
+        <a href="tools-minit.html" >Minit</a>
+        <a href="tools-mop.html" >Mop</a>
+    </details>
+
+    <details open>
+        <summary>Help</summary>
+        <a href="faq.html" >FAQ</a>
+        <a href="frb.html" >FAQ - FRB Transition</a>
+        <a href="troubleshooting.html" >Troubleshooting</a>
+    </details>
+
+    <hr />
+
+    <a class="sidenav-mainLink" href="/montage.org/api/Montage.html">API Reference</a>
+
+    <hr />
+
+</nav>
+
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/montagejs/event-handling.md"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                <h1 id="event-handling">Event Handling</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#about-event-delegation" id="markdown-toc-about-event-delegation">About Event Delegation</a></li>
+  <li><a href="#creating-event-handlers" id="markdown-toc-creating-event-handlers">Creating Event Handlers</a>    <ul>
+      <li><a href="#montage-event-listener-interface" id="markdown-toc-montage-event-listener-interface">Montage Event Listener Interface</a></li>
+      <li><a href="#examples" id="markdown-toc-examples">Examples</a></li>
+      <li><a href="#event-handler-precedence" id="markdown-toc-event-handler-precedence">Event handler precedence</a></li>
+    </ul>
+  </li>
+  <li><a href="#declaring-event-listeners-in-a-serialization" id="markdown-toc-declaring-event-listeners-in-a-serialization">Declaring event listeners in a serialization</a></li>
+</ul>
+
+<p>Montage includes a custom event manager that transparently wraps the browser’s native event handling mechanism. This enables several features in Montage, including simpler event handling code, property change observing, and results in better performing web applications.</p>
+
+<h2 id="about-event-delegation">About Event Delegation</h2>
+
+<p>Montage uses <em>event delegation</em> to manage event handling and dispatching. With event delegation, instead of installing event listeners on every element that may dispatch an event, a single event listener is installed on a parent element that listens for and responds to events that target its children. This is made possible by the standard event “flow” defined by the <a href="http://www.w3.org/TR/DOM-Level-3-Events/#event-flow">DOM Level 3 Event Specification</a>.</p>
+
+<p>Event delegation provides several benefits. For instance, application performance is improved since the number of event listeners is reduced. In a Montage application there is only one “native” event listener, which acts as the primary event responder and dispatcher of all events. It also enables Montage applications to observe changes to property values and arrays.</p>
+
+<h2 id="creating-event-handlers">Creating Event Handlers</h2>
+
+<p>You use the standard <code class="highlighter-rouge">addEventListener()</code> method to register an event handler on a target object. In Montage, the <code class="highlighter-rouge">target</code> object can be any JavaScript object, not just a DOM element.</p>
+
+<p><code class="highlighter-rouge">target.addEventListener(eventType, listener[, useCapture]);</code></p>
+
+<ul>
+  <li><code class="highlighter-rouge">eventType </code> A string representing the event type.</li>
+  <li><code class="highlighter-rouge">listener</code> An object that implements the Montage event listener interface, or a function to call directly.</li>
+  <li><code class="highlighter-rouge">useCapture</code> boolean; if true, causes all events of the specified type to be dispatched to the registered listener before being dispatched down to children targets’ listeners. Default is <code class="highlighter-rouge">false</code>, i.e. uses <strong>bubble</strong> to propagate upward, opposit of <strong>capture</strong>.</li>
+</ul>
+
+<h3 id="montage-event-listener-interface">Montage Event Listener Interface</h3>
+<p>The Montage event listener interface extends the <a href="http://dev.w3.org/2006/webapi/DOM-Level-3-Events/html/DOM3-Events.html#interface-EventListener">DOM Level 3 EventListener interface</a> specification implemented by all modern web browsers. In the standard interface you specify an object as a “listener” object for an event type. The listener object defines an <code class="highlighter-rouge">handleEvent()</code> method that is invoked by the browser whenever the specified event occurs:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// DOM Level 3 EventListener interface</span>
+<span class="kd">var</span> <span class="nx">listenerObj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">listenerObj</span><span class="p">.</span><span class="nx">handleEvent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">alert</span><span class="p">(</span><span class="s2">"Got 'mousedown' event."</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">loginBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"#loginBtn"</span><span class="p">);</span>
+<span class="nx">loginBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"mousedown"</span><span class="p">,</span> <span class="nx">listenerObj</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Montage extends this interface to make it more useful for developers. Instead of calling the same <code class="highlighter-rouge">handleEvent()</code> method on the listener object, Montage infers the name of the specific event handler method to call from below information:</p>
+
+<ul>
+  <li>The event’s phase, prefixed by <code class="highlighter-rouge">handle</code> for bubble, <code class="highlighter-rouge">capture</code> for capture</li>
+  <li>The event name, e.g. <code class="highlighter-rouge">action</code></li>
+  <li>The Monrage component’s name</li>
+  <li>Optionally, a string <code class="highlighter-rouge">identifier</code> property on the target element or object, which overrides component’s name</li>
+</ul>
+
+<p>E.g. to handle a click event during bubble phase for a component named <code class="highlighter-rouge">FooComponent</code> without an <code class="highlighter-rouge">identifier</code> property on <code class="highlighter-rouge">FooComponent</code>, Montage will invoke the <code class="highlighter-rouge">handleFooComponentClick()</code> method on the listener object. If we define <code class="highlighter-rouge">identifier</code> as <code class="highlighter-rouge">bar</code>, Montage will invoke <code class="highlighter-rouge">handleBarClick()</code>. Note the method name will be automatically lowerCamelCased.</p>
+
+<h3 id="examples">Examples</h3>
+
+<p>The following code is almost identical to the previous example without Montage, except that the handler method is named <code class="highlighter-rouge">handleMousedown()</code> instead of <code class="highlighter-rouge">handleEvent()</code>. This method will be invoked automatically by the event manager when the <code class="highlighter-rouge">mousedown</code> event occurs on <code class="highlighter-rouge">loginBtn</code>, but only during the event’s bubble phase.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Listening for mousedown event during bubble phase</span>
+<span class="kd">var</span> <span class="nx">listenerObj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">listenerObj</span><span class="p">.</span><span class="nx">handleMousedown</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">alert</span><span class="p">(</span><span class="s2">"Got 'mousedown' event."</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">loginBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"#loginBtn"</span><span class="p">);</span>
+<span class="nx">loginBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"mousedown"</span><span class="p">,</span> <span class="nx">listenerObj</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>To listen for the same event during its capture phase, you pass <code class="highlighter-rouge">true</code> as the third parameter to <code class="highlighter-rouge">addEventListener()</code>, and change the name of the event handler from <code class="highlighter-rouge">handleMousedown()</code> to <code class="highlighter-rouge">captureMousedown()</code>.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Listening for capture events on same element</span>
+<span class="kd">var</span> <span class="nx">listenerObj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">listenerObj</span><span class="p">.</span><span class="nx">captureMousedown</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">alert</span><span class="p">(</span><span class="s2">"Got 'mousedown' event during bubble phase."</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">loginBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"#loginBtn"</span><span class="p">);</span>
+<span class="nx">loginBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"mousedown"</span><span class="p">,</span> <span class="nx">listenerObj</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span> <span class="c1">// useCapture = true</span>
+</code></pre></div></div>
+
+<p>You can further specialize the event handler name by adding an <code class="highlighter-rouge">identifier</code> to the event target. The event manager includes this string, with its first letter capitalized, in the method name it composes. In the following example, the string “<strong>login</strong>” is assigned to the <code class="highlighter-rouge">loginBtn</code>‘s <code class="highlighter-rouge">identifier</code> property, so the event listener defines a <code class="highlighter-rouge">handleLoginMousedown()</code> function.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Using identifier strings on target elements</span>
+<span class="kd">var</span> <span class="nx">listenerObj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="c1">// Listener for loginBtn</span>
+<span class="nx">listenerObj</span><span class="p">.</span><span class="nx">handleLoginMousedown</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">"mousedown on loginBtn"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">loginBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"#loginBtn"</span><span class="p">);</span>
+<span class="c1">// Assign string identifier to button</span>
+<span class="nx">loginBtn</span><span class="p">.</span><span class="nx">identifier</span> <span class="o">=</span> <span class="s2">"login"</span><span class="p">;</span>
+<span class="nx">loginBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"mousedown"</span><span class="p">,</span> <span class="nx">listenerObj</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="event-handler-precedence">Event handler precedence</h3>
+<p>The event manager will always invoke the most specific event handler. For instance, in the following example the listener object defines two event handlers, one that includes the target’s identifier string (<code class="highlighter-rouge">handleLoginMousedown()</code>) and one that doesn’t (<code class="highlighter-rouge">handleMousedown()</code>). Montage will always invoke <code class="highlighter-rouge">handleLoginMousedown()</code> as its purpose is more specific than the other.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Event handler precedence</span>
+<span class="kd">var</span> <span class="nx">listenerObj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">listenerObj</span><span class="p">.</span><span class="nx">handleMousedown</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+     <span class="c1">// This won't get called.</span>
+     <span class="nx">alert</span><span class="p">(</span><span class="s2">"Got 'mousedown' event."</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">listenerObj</span><span class="p">.</span><span class="nx">handleLoginMousedown</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">alert</span><span class="p">(</span><span class="s2">"Got 'mousedown' event on event.target"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="kd">var</span> <span class="nx">loginBtn</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="s2">"#loginBtn"</span><span class="p">);</span>
+<span class="nx">loginBtn</span><span class="p">.</span><span class="nx">identifier</span> <span class="o">=</span> <span class="s2">"login"</span><span class="p">;</span>
+<span class="nx">loginBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"mousedown"</span><span class="p">,</span> <span class="nx">listenerObj</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Note that if <code class="highlighter-rouge">loginBtn</code> did not define an <code class="highlighter-rouge">identifier</code> property, the event manager would invoke <code class="highlighter-rouge">handleMousedown()</code>.</p>
+
+<p>Also, Montage will invoke the listener’s generic <code class="highlighter-rouge">handleEvent()</code> method, if it exists, and if a more specifically named handler is not declared. This provides a fallback mechanism to respond to “generic” events.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Using default handleEvent() handler</span>
+<span class="kd">var</span> <span class="nx">listenerObj</span> <span class="o">=</span> <span class="p">{};</span>
+<span class="nx">listenerObj</span><span class="p">.</span><span class="nx">captureClickEvent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">alert</span><span class="p">(</span><span class="s2">"Got click event"</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">listenerObj</span><span class="p">.</span><span class="nx">handleEvent</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+     <span class="nx">alert</span><span class="p">(</span><span class="s2">"No specific handler for "</span> <span class="o">+</span> <span class="nx">event</span><span class="p">.</span><span class="nx">type</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nx">loginBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"mousedown"</span><span class="p">,</span> <span class="nx">listenerObj</span><span class="p">);</span>
+<span class="nx">loginBtn</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">"click"</span><span class="p">,</span> <span class="nx">listenerObj</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="declaring-event-listeners-in-a-serialization">Declaring event listeners in a serialization</h2>
+<p>Each object in a serialization may include a “listeners” object that specifies the event type, listener object, and (optionally) whether to enable capture for the event.</p>
+
+<p>First you create the listener object, which contains a <code class="highlighter-rouge">handleAction()</code> method. This method changes the <code class="highlighter-rouge">value</code> property of the Montage Button component that dispatched the event, setting its label.</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// controller.js</span>
+<span class="kd">var</span> <span class="nx">Montage</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"montage/core/core"</span><span class="p">).</span><span class="nx">Montage</span><span class="p">;</span>
+
+<span class="nx">exports</span><span class="p">.</span><span class="nx">Controller</span> <span class="o">=</span> <span class="nx">Montage</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="nx">Montage</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">handleAction</span><span class="p">:</span> <span class="p">{</span>
+        <span class="na">value</span><span class="p">:</span> <span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">value</span> <span class="o">=</span> <span class="s2">"Well done"</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<p>Next we create the HTML page that declares the Button component and the custom Controller object. The Button component’s <code class="highlighter-rouge">listeners</code> property specifies the type of event to listen for (<code class="highlighter-rouge">action</code>) and the listener object that will handle the event.</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;html&gt;</span>
+ ...
+<span class="nt">&lt;script </span><span class="na">type=</span><span class="s">"text/montage-serialization"</span><span class="nt">&gt;</span>
+<span class="p">{</span>
+    <span class="s2">"button"</span> <span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Button"</span><span class="p">,</span>
+        <span class="s2">"module"</span><span class="p">:</span> <span class="s2">"montage/ui/button.reel"</span><span class="p">,</span>
+        <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"element"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"#"</span><span class="p">:</span> <span class="s2">"btn"</span><span class="p">}</span>
+        <span class="p">},</span>
+        <span class="s2">"listeners"</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"action"</span><span class="p">,</span>
+                <span class="s2">"listener"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"@"</span><span class="p">:</span> <span class="s2">"controller"</span><span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">},</span>
+
+    <span class="s2">"controller"</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Controller"</span><span class="p">,</span>
+        <span class="s2">"module"</span><span class="p">:</span> <span class="s2">"controller"</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="nt">&lt;/script&gt;</span>
+ ...
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>You can also specify the <code class="highlighter-rouge">identifier</code> string in the serialization, as shown below:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"button"</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Button"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"module"</span><span class="p">:</span><span class="w"> </span><span class="s2">"montage/ui/button.reel"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"element"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"#"</span><span class="p">:</span><span class="w"> </span><span class="s2">"btn"</span><span class="p">},</span><span class="w">
+            </span><span class="s2">"identifier"</span><span class="p">:</span><span class="w"> </span><span class="s2">"purchase"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="s2">"listeners"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+                </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"action"</span><span class="p">,</span><span class="w">
+                </span><span class="s2">"listener"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="s2">"@"</span><span class="p">:</span><span class="w"> </span><span class="s2">"controller"</span><span class="p">}</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+
+    </span><span class="s2">"controller"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Controller"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"module"</span><span class="p">:</span><span class="w"> </span><span class="s2">"controller"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+            </article>
+        </div>
+    </div>
+</section>
+
+
+  <footer class="footer">
+
+    <div class="wrapper">
+
+      <ul class="sitemap">
+            <li>
+                <a href="http://montage.org/gallery/" class="sitemap-main">Gallery</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/product/" class="sitemap-main">Product</a>
+                <a href="/montage.org/montage-studio/ide-at-a-glance.html">Overview</a>
+                <a href="/montage.org/montage-studio/tutorial-simple-to-do.html">Quick Start</a>
+                <a href="/montage.org/montage-studio/faq.html">FAQ</a>
+            </li> -->
+            <li>
+                <a href="http://montage.org/montagejs" class="sitemap-main">Open Source</a>
+                <a href="/montage.org/montagejs/">Docs</a>
+                <a href="/montage.org/montagejs/montagejs-setup.html">Quick Start</a>
+                <a href="/montage.org/montagejs/montagejs-examples.html">Examples</a>
+                <a href="/montage.org/api/AbstractButton.html">API</a>
+                <a href="/montage.org/montagejs/faq.html">FAQ</a>
+            </li>
+            <li>
+                <!-- <a href="http://montage.org/community" class="sitemap-main">Community</a> -->
+                <!-- <a href="http://forum.montage.org/">Forum</a> -->
+                <!-- <a href="http://montage.org/blog/events/">Events</a> -->
+                <a href="https://gitter.im/montagejs" target="_blank">Gitter</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/blog/" class="sitemap-main">Blog</a>
+            </li> -->
+            <li>
+                <a href="https://en.wikipedia.org/wiki/MontageJS">History</a>
+                <!-- <a href="http://montage.org/press/">Press</a> -->
+                <!-- <a href="http://montage.org/contact-us/">Contact us</a> -->
+            </li>
+      </ul>
+
+        <a href="http://montage.org/" class="footer-logo"></a>
+
+      <p class="footer-end">2010–2018 Motorola, Montage Studio, Pacific Disaster Center, Kaazing</p>
+    </div>
+
+    </footer>
+
+
+  <!-- Google -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35717912-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>MontageJS Bootstrapping</title>
+
+    <link rel="stylesheet" href="/montage.org/stylesheets/base.css">
+
+    <!--highlight.js-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="header-container">
+        <a class="logo" href="http://montage.org/">Home</a>
+
+        <input id="nav-toggle" class="nav-toggle nav-toggle--main" type="checkbox">
+        <label class="nav-toggleLabel nav-toggleLabel--main" for="nav-toggle" onclick></label>
+
+        <nav class="nav">
+            <a class="nav-item" href="#">Montage</a>
+        </nav>
+    </div>
+</header>
+
+
+
+  <section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+            
+<input id="sidenav-toggle" class="sidenav-toggle" type="checkbox">
+<label class="sidenav-toggleLabel" for="sidenav-toggle" onclick></label>
+
+        <nav class="sidenav">
+
+    <details open>
+        <summary>Quick Start</summary>
+        <a href="montagejs-setup.html" >Set Up</a>
+        <a href="hello-montage.html" >Hello Montage</a>
+    </details>
+
+    <details open>
+        <summary>Demos</summary>
+        <a href="montagejs-examples.html" >Examples</a>
+        <a href="http://montagejs.github.com/mfiddle/" target="_blank">Mfiddle</a>
+
+    </details>
+
+    <details open>
+        <summary>Tutorials</summary>
+        <a href="tutorial-using-substitutions-with-montagejs.html" >Using Substitutions</a>
+        <a href="tutorial-reddit-client-with-montagejs.html" >Building a Reddit Client</a>
+        <a href="tutorial-3d-applications-with-montagejs.html" >Building 3D Applications</a>
+    </details>
+
+    <details open>
+        <summary>Concepts</summary>
+        <a href="bootstrapping.html" class="active">Bootstrapping</a>
+        <a href="application.html" >Application</a>
+        <a href="montagejs-templates.html" >Templates</a>
+        <a href="components.html" >Components</a>
+        <a href="component-composition.html" >Component Composition</a>
+        <a href="serialization-declaration.html" >Serialization Declaration</a>
+        <a href="montagejs-objects.html" >Objects</a>
+        <a href="data-binding.html" >Data Binding</a>
+        <a href="event-handling.html" >Event Handling</a>
+        <a href="draw-cycle.html" >Draw Cycle</a>
+        <a href="blueprints.html" >Blueprints</a>
+        <a href="gestures-composers.html" >Gestures & Composers</a>
+        <a href="naming-conventions.html" >Naming Conventions</a>
+    </details>
+
+    <details open>
+        <summary>Built-in Components</summary>
+        <a href="repetition.html" >Repetition</a>
+        <a href="substitution.html" >Substitution</a>
+        <a href="overlay.html" >Overlay</a>
+    </details>
+
+    <details open>
+        <summary>UI Component Sets</summary>
+        <a href="themes.html" >Introduction</a>
+        <a href="theme-digit-components.html" >Digit</a>
+        <a href="theme-matte-components.html" >Matte</a>
+        <a href="theme-native-components.html" >Native</a>
+        <a href="autocomplete.html" >Autocomplete</a>
+    </details>
+
+    <details open>
+        <summary>Tools</summary>
+        <a href="tools-minit.html" >Minit</a>
+        <a href="tools-mop.html" >Mop</a>
+    </details>
+
+    <details open>
+        <summary>Help</summary>
+        <a href="faq.html" >FAQ</a>
+        <a href="frb.html" >FAQ - FRB Transition</a>
+        <a href="troubleshooting.html" >Troubleshooting</a>
+    </details>
+
+    <hr />
+
+    <a class="sidenav-mainLink" href="/montage.org/api/Montage.html">API Reference</a>
+
+    <hr />
+
+</nav>
+
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/montagejs/bootstrapping.md"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                <h1 id="montagejs-bootstrapping">MontageJS Bootstrapping</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#browser" id="markdown-toc-browser">Browser</a>    <ul>
+      <li><a href="#development-mode-ie-non-optimized--un-mopped" id="markdown-toc-development-mode-ie-non-optimized--un-mopped">Development mode, i.e. non-optimized &amp; un-mopped</a>        <ul>
+          <li><a href="#platformbootstrap" id="markdown-toc-platformbootstrap">platform.bootstrap</a></li>
+          <li><a href="#callback" id="markdown-toc-callback">Callback</a></li>
+          <li><a href="#initmontage" id="markdown-toc-initmontage"><code class="highlighter-rouge">initMontage</code></a></li>
+        </ul>
+      </li>
+      <li><a href="#production-mode-ie-optimized--mopped" id="markdown-toc-production-mode-ie-optimized--mopped">Production mode, i.e. optimized &amp; mopped</a>        <ul>
+          <li><a href="#platformbootstrap-1" id="markdown-toc-platformbootstrap-1"><code class="highlighter-rouge">platform.bootstrap</code></a></li>
+          <li><a href="#callback-1" id="markdown-toc-callback-1">Callback</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#nodejs" id="markdown-toc-nodejs">Node.js</a></li>
+</ul>
+
+<blockquote>
+  <p>Note: “mopped” refers to <a href="https://github.com/montagejs/mop"><code class="highlighter-rouge">mop</code>, the Montage Optimizer</a></p>
+</blockquote>
+
+<p>MontageJS calls <code class="highlighter-rouge">exports.initMontage</code> after setting up some variables, which in turn calls <code class="highlighter-rouge">getPlatform</code>, which returns an object with platform-specific functions (currently the browser and node.js are supported).</p>
+
+<h2 id="browser">Browser</h2>
+
+<h3 id="development-mode-ie-non-optimized--un-mopped">Development mode, i.e. non-optimized &amp; un-mopped</h3>
+
+<h4 id="platformbootstrap">platform.bootstrap</h4>
+
+<p><code class="highlighter-rouge">platform.bootstrap</code> is called with a callback to use when the initial bootstraping has finished. This kicks off the browser process. The parameters are retrieved from the <code class="highlighter-rouge">data-</code> attributes of the script tag that loads <code class="highlighter-rouge">montage.js</code>. A “resolve” function is also created that will return an absolute path from a given relative path, using the location of the document as the base. This is implemented by using <code class="highlighter-rouge">&lt;base&gt;</code> and <code class="highlighter-rouge">&lt;a&gt;</code> elements, and using the interaction of these elements in the browser to do the actual resolution.</p>
+
+<p>Next we add a listener for <code class="highlighter-rouge">DOMContentLoaded</code>, which will call <code class="highlighter-rouge">callbackIfReady</code> when done.</p>
+
+<p>Montage needs 3 files for further bootstrapping:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">require.js</code> and <code class="highlighter-rouge">browser.js</code> from <a href="https://github.com/montagejs/mr"><code class="highlighter-rouge">Mr</code></a> to set up the <code class="highlighter-rouge">CommonJS</code> module system in the browser</li>
+  <li><code class="highlighter-rouge">q.js</code> - add support for promises</li>
+</ul>
+
+<p>These are loaded by injecting script tags. We know when they are loaded because each of the files call a global <code class="highlighter-rouge">bootstrap</code> function with their id and a function that returns their exports when ready. <strong>Mopped</strong>: If the package is Mopped then these files will be available in the bootstrapping bundle, and so no script tags are injected.</p>
+
+<p>The global <code class="highlighter-rouge">bootstrap</code> function keeps track of the 3 files and once all three have loaded calls the <code class="highlighter-rouge">allModulesLoaded</code> function.</p>
+
+<p><code class="highlighter-rouge">allModulesLoaded</code> uses a miniature <code class="highlighter-rouge">require</code> implementation called <code class="highlighter-rouge">bootRequire</code> to set up the promise and require/browser modules. Finally it calls <code class="highlighter-rouge">callbackIfReady</code>.</p>
+
+<p><code class="highlighter-rouge">callbackIfReady</code> checks that both the <code class="highlighter-rouge">DOM</code> and the modules are loaded, and if so calls the callback given to this function.</p>
+
+<h4 id="callback">Callback</h4>
+
+<p>First we set up the config object to load the Montage package. This involves setting up the loader that lets the us load <code class="highlighter-rouge">.reel</code> files directly (e.g. <code class="highlighter-rouge">require("montage/ui/text.reel")</code>), and compilers that attach Montage metadata to the exports of any loaded module (<code class="highlighter-rouge">SerializationCompiler</code>) and export the HTML of loaded HTML files as <code class="highlighter-rouge">content</code> (<code class="highlighter-rouge">TemplateCompiler</code>).</p>
+
+<p>If mopped, bundles are loaded at this point.</p>
+
+<p>We then use <code class="highlighter-rouge">Require</code> to load the Montage package. Once this promise has completed we have the require function for Montage, <code class="highlighter-rouge">montageRequire</code>. We use this to load the Q (Promise) package so that we have complete information about the Promise package. We then insert the already loaded promise module into it, so that it isn’t requested again. We set up the linter, to give us informative errors when there’s a syntax error in a loaded file.</p>
+
+<p>At this point there is code to handle controlling the Montage bootstrapper from a remote frame, for example for testing. This won’t be covered here.</p>
+
+<p>If there was a <code class="highlighter-rouge">data-auto-package</code> attribute we create inject a fake package description so that a package.json is not needed, otherwise we check if location is a json file (set through a <code class="highlighter-rouge">data-package</code> attribute) and if so inject it directly. Finally, we load the application package.</p>
+
+<p>Once this is complete we have the <code class="highlighter-rouge">montageRequire</code> and the <code class="highlighter-rouge">applicationRequire</code> and we use these to finish initializing Montage in <code class="highlighter-rouge">initMontage</code></p>
+
+<h4 id="initmontage"><code class="highlighter-rouge">initMontage</code></h4>
+
+<p>Here we load the last of Montage’s essential dependencies and once they have completed we configure the application. This involves setting up the stack trace length (set to 0 for optimization), event manager and calling <code class="highlighter-rouge">montageWillLoad</code>, again for testing.</p>
+
+<p>Next we check to see if the <code class="highlighter-rouge">package.json</code> specified an application prototype to use, otherwise we use “core/application”. Once this is loaded will call <code class="highlighter-rouge">_load</code> on the application object which in the default implementation loads the Montage component and template modules, and causes any serialization in this HTML page to be parsed.</p>
+
+<p>Finally, we check if a <code class="highlighter-rouge">data-module</code> attribute was given and if so load this module.</p>
+
+<p>The bootstrapping is complete. The serialization has created components for the user to interact with, or the loaded module is doing its thing.</p>
+
+<h3 id="production-mode-ie-optimized--mopped">Production mode, i.e. optimized &amp; mopped</h3>
+
+<p>When Mopped the bootstrapping bundle defines a global <code class="highlighter-rouge">BUNDLE</code> array, which contains a list of bundle filenames to load.</p>
+
+<h4 id="platformbootstrap-1"><code class="highlighter-rouge">platform.bootstrap</code></h4>
+
+<p>As the normal bootstrap, except the 3 bootstrapping modules needed will be available in the bootstrapping bundle, and so no script tags are injected.</p>
+
+<h4 id="callback-1">Callback</h4>
+
+<p>Before loading the Montage package the <code class="highlighter-rouge">BUNDLE</code> variable is checked. If it exists then a script tag is injected for each of the filenames in the array. Each bundle calls a global <code class="highlighter-rouge">bundleLoaded</code> function with its name. A <code class="highlighter-rouge">preloaded</code> promise is added to the config object that is resolved once all of the bundles have loaded. Mr waits on this promise before proceeding, which means that the Montage package is not loaded until all the bundles have loaded.</p>
+
+<p>This is where the differences in un-mopped and mopped bootstrapping end.</p>
+
+<h2 id="nodejs">Node.js</h2>
+
+<p>Montage currently does not support Node.js.</p>
+
+            </article>
+        </div>
+    </div>
+</section>
+
+
+  <footer class="footer">
+
+    <div class="wrapper">
+
+      <ul class="sitemap">
+            <li>
+                <a href="http://montage.org/gallery/" class="sitemap-main">Gallery</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/product/" class="sitemap-main">Product</a>
+                <a href="/montage.org/montage-studio/ide-at-a-glance.html">Overview</a>
+                <a href="/montage.org/montage-studio/tutorial-simple-to-do.html">Quick Start</a>
+                <a href="/montage.org/montage-studio/faq.html">FAQ</a>
+            </li> -->
+            <li>
+                <a href="http://montage.org/montagejs" class="sitemap-main">Open Source</a>
+                <a href="/montage.org/montagejs/">Docs</a>
+                <a href="/montage.org/montagejs/montagejs-setup.html">Quick Start</a>
+                <a href="/montage.org/montagejs/montagejs-examples.html">Examples</a>
+                <a href="/montage.org/api/AbstractButton.html">API</a>
+                <a href="/montage.org/montagejs/faq.html">FAQ</a>
+            </li>
+            <li>
+                <!-- <a href="http://montage.org/community" class="sitemap-main">Community</a> -->
+                <!-- <a href="http://forum.montage.org/">Forum</a> -->
+                <!-- <a href="http://montage.org/blog/events/">Events</a> -->
+                <a href="https://gitter.im/montagejs" target="_blank">Gitter</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/blog/" class="sitemap-main">Blog</a>
+            </li> -->
+            <li>
+                <a href="https://en.wikipedia.org/wiki/MontageJS">History</a>
+                <!-- <a href="http://montage.org/press/">Press</a> -->
+                <!-- <a href="http://montage.org/contact-us/">Contact us</a> -->
+            </li>
+      </ul>
+
+        <a href="http://montage.org/" class="footer-logo"></a>
+
+      <p class="footer-end">2010–2018 Motorola, Montage Studio, Pacific Disaster Center, Kaazing</p>
+    </div>
+
+    </footer>
+
+
+  <!-- Google -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35717912-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

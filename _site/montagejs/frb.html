@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>FAQ - FRB Transition</title>
+
+    <link rel="stylesheet" href="/montage.org/stylesheets/base.css">
+
+    <!--highlight.js-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="header-container">
+        <a class="logo" href="http://montage.org/">Home</a>
+
+        <input id="nav-toggle" class="nav-toggle nav-toggle--main" type="checkbox">
+        <label class="nav-toggleLabel nav-toggleLabel--main" for="nav-toggle" onclick></label>
+
+        <nav class="nav">
+            <a class="nav-item" href="#">Montage</a>
+        </nav>
+    </div>
+</header>
+
+
+
+  <section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+            
+<input id="sidenav-toggle" class="sidenav-toggle" type="checkbox">
+<label class="sidenav-toggleLabel" for="sidenav-toggle" onclick></label>
+
+        <nav class="sidenav">
+
+    <details open>
+        <summary>Quick Start</summary>
+        <a href="montagejs-setup.html" >Set Up</a>
+        <a href="hello-montage.html" >Hello Montage</a>
+    </details>
+
+    <details open>
+        <summary>Demos</summary>
+        <a href="montagejs-examples.html" >Examples</a>
+        <a href="http://montagejs.github.com/mfiddle/" target="_blank">Mfiddle</a>
+
+    </details>
+
+    <details open>
+        <summary>Tutorials</summary>
+        <a href="tutorial-using-substitutions-with-montagejs.html" >Using Substitutions</a>
+        <a href="tutorial-reddit-client-with-montagejs.html" >Building a Reddit Client</a>
+        <a href="tutorial-3d-applications-with-montagejs.html" >Building 3D Applications</a>
+    </details>
+
+    <details open>
+        <summary>Concepts</summary>
+        <a href="bootstrapping.html" >Bootstrapping</a>
+        <a href="application.html" >Application</a>
+        <a href="montagejs-templates.html" >Templates</a>
+        <a href="components.html" >Components</a>
+        <a href="component-composition.html" >Component Composition</a>
+        <a href="serialization-declaration.html" >Serialization Declaration</a>
+        <a href="montagejs-objects.html" >Objects</a>
+        <a href="data-binding.html" >Data Binding</a>
+        <a href="event-handling.html" >Event Handling</a>
+        <a href="draw-cycle.html" >Draw Cycle</a>
+        <a href="blueprints.html" >Blueprints</a>
+        <a href="gestures-composers.html" >Gestures & Composers</a>
+        <a href="naming-conventions.html" >Naming Conventions</a>
+    </details>
+
+    <details open>
+        <summary>Built-in Components</summary>
+        <a href="repetition.html" >Repetition</a>
+        <a href="substitution.html" >Substitution</a>
+        <a href="overlay.html" >Overlay</a>
+    </details>
+
+    <details open>
+        <summary>UI Component Sets</summary>
+        <a href="themes.html" >Introduction</a>
+        <a href="theme-digit-components.html" >Digit</a>
+        <a href="theme-matte-components.html" >Matte</a>
+        <a href="theme-native-components.html" >Native</a>
+        <a href="autocomplete.html" >Autocomplete</a>
+    </details>
+
+    <details open>
+        <summary>Tools</summary>
+        <a href="tools-minit.html" >Minit</a>
+        <a href="tools-mop.html" >Mop</a>
+    </details>
+
+    <details open>
+        <summary>Help</summary>
+        <a href="faq.html" >FAQ</a>
+        <a href="frb.html" class="active">FAQ - FRB Transition</a>
+        <a href="troubleshooting.html" >Troubleshooting</a>
+    </details>
+
+    <hr />
+
+    <a class="sidenav-mainLink" href="/montage.org/api/Montage.html">API Reference</a>
+
+    <hr />
+
+</nav>
+
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/montagejs/frb.md"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                <h1 id="faq---frb-transition">FAQ - FRB Transition</h1>
+
+<p>For more details on FRB, please see its <a href="http://documentup.com/montagejs/frb/" target="_blank">docs</a>.</p>
+
+<p><strong>How do I observe a <code class="highlighter-rouge">path</code> from my object for changes <em>after</em> they’ve happened?</strong></p>
+
+<p>Before</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">myObject</span><span class="p">.</span><span class="nx">addPropertyChangeListener</span><span class="p">(</span><span class="s2">"path"</span><span class="p">,</span> <span class="nx">handler</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>When the path changes <code class="highlighter-rouge">myObject.handleChange(notification)</code> will be called</p>
+
+<p>After</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">aMontageObject</span><span class="p">.</span><span class="nx">addPathChangeListener</span><span class="p">(</span><span class="s2">"path"</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="nx">opt_methodName</span><span class="p">)</span>
+
+<span class="c1">// or</span>
+
+<span class="nx">Montage</span><span class="p">.</span><span class="nx">addPathChangeListener</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+    <span class="nx">myObject</span><span class="p">,</span> <span class="s2">"path"</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="nx">opt_methodName</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">aMontageObject</code> is an object that has <code class="highlighter-rouge">Montage</code> in its prototype chain: <code class="highlighter-rouge">Montage.isPrototypeOf(aMontageObject) === true</code> holds.</p>
+
+<p>When the value at the path changes (not the content of the value), the first function in this list gets called with the <code class="highlighter-rouge">newValue</code>, <code class="highlighter-rouge">path</code>, and <code class="highlighter-rouge">myObject</code>.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">handler[methodName]</code></li>
+  <li><code class="highlighter-rouge">handler.handlePathChange</code></li>
+  <li><code class="highlighter-rouge">handler</code></li>
+</ul>
+
+<p><strong>How do I observe a <code class="highlighter-rouge">path</code> from my object for changes <em>before</em> they happen?</strong></p>
+
+<p>Before</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">myObject</span><span class="p">.</span><span class="nx">addPropertyChangeListener</span><span class="p">(</span><span class="s2">"path"</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>After</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">aMontageObject</span><span class="p">.</span><span class="nx">addPathChangeListener</span><span class="p">(</span><span class="s2">"path"</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="s2">"handleMethodName"</span><span class="p">,</span> <span class="kc">true</span><span class="p">)</span>
+
+<span class="c1">// or</span>
+
+<span class="nx">Montage</span><span class="p">.</span><span class="nx">addPathChangeListener</span><span class="p">.</span><span class="nx">call</span><span class="p">(</span>
+    <span class="nx">myObject</span><span class="p">,</span> <span class="s2">"path"</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="s2">"handleMethodName"</span><span class="p">,</span> <span class="kc">true</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>How do I bind a property of my object to a property of another object so they are always the same?</strong></p>
+
+<p>Before</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Object</span><span class="p">.</span><span class="nx">defineBinding</span><span class="p">(</span><span class="nx">myObject</span><span class="p">,</span> <span class="s2">"myProperty"</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">boundObject</span><span class="p">:</span> <span class="nx">anotherObject</span><span class="p">,</span>
+    <span class="na">boundObjectPropertyPath</span><span class="p">:</span> <span class="s2">"foo.bar"</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>After</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">aMontageObject</span><span class="p">.</span><span class="nx">defineBinding</span><span class="p">(</span><span class="s2">"myProperty"</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">"&lt;-&gt;"</span><span class="p">:</span> <span class="s2">"foo.bar"</span><span class="p">,</span>
+    <span class="na">source</span><span class="p">:</span> <span class="nx">anotherObject</span>
+<span class="p">});</span>
+
+<span class="c1">// or</span>
+
+<span class="kd">var</span> <span class="nx">Bindings</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"montage/core/bindings"</span><span class="p">).</span><span class="nx">Bindings</span><span class="p">;</span>
+<span class="nx">Bindings</span><span class="p">.</span><span class="nx">defineBinding</span><span class="p">(</span><span class="nx">myObject</span><span class="p">,</span> <span class="s2">"myProperty"</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">"&lt;-&gt;"</span><span class="p">:</span> <span class="s2">"foo.bar"</span><span class="p">,</span>
+    <span class="na">source</span><span class="p">:</span> <span class="nx">anotherObject</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>How do I bind a property of my object to a property of another object such that changes to myProperty do not affect the otherObject’s property?</strong></p>
+
+<p>Before</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Object</span><span class="p">.</span><span class="nx">defineBinding</span><span class="p">(</span><span class="nx">myObject</span><span class="p">,</span> <span class="s2">"myProperty"</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">boundObject</span><span class="p">:</span> <span class="nx">anotherObject</span><span class="p">,</span>
+    <span class="na">boundObjectPropertyPath</span><span class="p">:</span> <span class="s2">"foo.bar"</span><span class="p">,</span>
+    <span class="na">oneway</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>After</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">aMontageObject</span><span class="p">.</span><span class="nx">defineBinding</span><span class="p">(</span><span class="s2">"myProperty"</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">"&lt;-"</span><span class="p">:</span> <span class="s2">"foo.bar"</span><span class="p">,</span>
+    <span class="na">source</span><span class="p">:</span> <span class="nx">anotherObject</span>
+<span class="p">});</span>
+
+<span class="c1">// or</span>
+
+<span class="kd">var</span> <span class="nx">Bindings</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s2">"montage/core/bindings"</span><span class="p">).</span><span class="nx">Bindings</span><span class="p">;</span>
+<span class="nx">Bindings</span><span class="p">.</span><span class="nx">defineBinding</span><span class="p">(</span><span class="nx">myObject</span><span class="p">,</span> <span class="s2">"myProperty"</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s2">"&lt;-"</span><span class="p">:</span> <span class="s2">"foo.bar"</span><span class="p">,</span>
+    <span class="na">source</span><span class="p">:</span> <span class="nx">anotherObject</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p><strong>How do I watch changes to an array at the end of a property path so I know what’s added and removed?</strong></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">aMontageObject</span><span class="p">.</span><span class="nx">addRangeAtPathChangeListener</span><span class="p">(</span>
+    <span class="s2">"array"</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="s2">"handleArrayRangeChange"</span>
+<span class="p">);</span>
+
+<span class="c1">// or</span>
+
+<span class="nx">Montage</span><span class="p">.</span><span class="nx">addRangeAtPathChangeListener</span><span class="p">(</span>
+    <span class="nx">myObject</span><span class="p">,</span> <span class="s2">"array"</span><span class="p">,</span> <span class="nx">handler</span><span class="p">,</span> <span class="s2">"handleArrayRangeChange"</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>Calls <code class="highlighter-rouge">handler.handleArrayRangeChange</code> with <code class="highlighter-rouge">plus</code>, <code class="highlighter-rouge">minus</code>, and <code class="highlighter-rouge">index</code>.</p>
+
+<p><strong>How do I change a private value and dispatch the change on an affected public property?</strong></p>
+
+<p>Before</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">myObject</span><span class="p">.</span><span class="nx">dispatchPropertyChange</span><span class="p">(</span>
+    <span class="s2">"affectedProperty"</span><span class="p">,</span>
+    <span class="s2">"anotherAffectProperty"</span><span class="p">,</span>
+    <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span><span class="nx">myObject</span><span class="p">.</span><span class="nx">_underlyingProperty</span> <span class="o">=</span> <span class="nx">newValue</span><span class="p">}</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p>After</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">myObject</span><span class="p">.</span><span class="nx">dispatchBeforeOwnPropertyChange</span><span class="p">(</span>
+    <span class="s2">"affectedProperty"</span><span class="p">,</span> <span class="nx">myObject</span><span class="p">.</span><span class="nx">affectedProperty</span>
+<span class="p">);</span>
+
+<span class="nx">myObject</span><span class="p">.</span><span class="nx">dispatchBeforeOwnPropertyChange</span><span class="p">(</span>
+    <span class="s2">"anotherAffectedProperty"</span><span class="p">,</span> <span class="nx">myObject</span><span class="p">.</span><span class="nx">anotherAffectedProperty</span>
+<span class="p">);</span>
+
+<span class="nx">myObject</span><span class="p">.</span><span class="nx">_underlyingProperty</span> <span class="o">=</span> <span class="nx">newValue</span><span class="p">;</span>
+
+<span class="nx">myObject</span><span class="p">.</span><span class="nx">dispatchOwnPropertyChange</span><span class="p">(</span>
+    <span class="s2">"affectedProperty"</span><span class="p">,</span> <span class="nx">myObject</span><span class="p">.</span><span class="nx">affectedProperty</span>
+<span class="p">);</span>
+
+<span class="nx">myObject</span><span class="p">.</span><span class="nx">dispatchOwnPropertyChange</span><span class="p">(</span>
+    <span class="s2">"anotherAffectedProperty"</span><span class="p">,</span> <span class="nx">myObject</span><span class="p">.</span><span class="nx">anotherAffectedProperty</span>
+<span class="p">);</span>
+</code></pre></div></div>
+
+<p><strong>How do I make a checkbox automatically uncheck if it becomes disabled</strong></p>
+
+<p>Bind <code class="highlighter-rouge">checked</code> flag 1-way via <code class="highlighter-rouge">&lt;-</code> to flags <code class="highlighter-rouge">checked &amp;&amp; enabled</code>, which will cause the checkbox to retain its state when it is enabled, but unchecks when it becomes disabled.</p>
+
+<p><strong>How do I make a “select all” or “select none” checkboxes</strong></p>
+
+<p>The checkbox needs to be useful both for observing whether all the checkboxes are currently checked, none of them are checked, and also for forcing them all to become checked or unchecked.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>checkboxes.every{checked} &lt;-&gt; allChecked
+checkboxes.every{!checked} &lt;-&gt; noneChecked
+</code></pre></div></div>
+
+<p>FRB supports binding to “every” and “some” blocks.</p>
+
+<p><strong>But what if the checkboxes can be disabled?</strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>checkbox.checked &lt;- checked &amp;&amp; enabled
+checkboxes.every{checked || !enabled} &lt;-&gt; allChecked
+checkboxes.every{!checked} &lt;-&gt; noneChecked
+</code></pre></div></div>
+
+<p>The <code class="highlighter-rouge">|| !enabled</code> clause serves two purposes.  If a checkbox becomes disabled, the first binding will cause it to become unchecked.  Without the <code class="highlighter-rouge">|| !enabled</code> clause, this might cause <code class="highlighter-rouge">allChecked</code> to become false, even though the checkbox should not be participating.  With the <code class="highlighter-rouge">|| !enabled</code> clause, <code class="highlighter-rouge">checked || !enabled</code> is true so it effectively does not participate in determining whether <code class="highlighter-rouge">allChecked</code> should become false.</p>
+
+<p>In the other direction, if <code class="highlighter-rouge">allChecked</code> becomes true, without the <code class="highlighter-rouge">|| !enabled</code> clause, it would cause all disabled checkboxes to become checked.  With it, <code class="highlighter-rouge">checked || !enabled</code> is already true so it does not force <code class="highlighter-rouge">checked</code> to become <code class="highlighter-rouge">true</code>.</p>
+
+            </article>
+        </div>
+    </div>
+</section>
+
+
+  <footer class="footer">
+
+    <div class="wrapper">
+
+      <ul class="sitemap">
+            <li>
+                <a href="http://montage.org/gallery/" class="sitemap-main">Gallery</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/product/" class="sitemap-main">Product</a>
+                <a href="/montage.org/montage-studio/ide-at-a-glance.html">Overview</a>
+                <a href="/montage.org/montage-studio/tutorial-simple-to-do.html">Quick Start</a>
+                <a href="/montage.org/montage-studio/faq.html">FAQ</a>
+            </li> -->
+            <li>
+                <a href="http://montage.org/montagejs" class="sitemap-main">Open Source</a>
+                <a href="/montage.org/montagejs/">Docs</a>
+                <a href="/montage.org/montagejs/montagejs-setup.html">Quick Start</a>
+                <a href="/montage.org/montagejs/montagejs-examples.html">Examples</a>
+                <a href="/montage.org/api/AbstractButton.html">API</a>
+                <a href="/montage.org/montagejs/faq.html">FAQ</a>
+            </li>
+            <li>
+                <!-- <a href="http://montage.org/community" class="sitemap-main">Community</a> -->
+                <!-- <a href="http://forum.montage.org/">Forum</a> -->
+                <!-- <a href="http://montage.org/blog/events/">Events</a> -->
+                <a href="https://gitter.im/montagejs" target="_blank">Gitter</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/blog/" class="sitemap-main">Blog</a>
+            </li> -->
+            <li>
+                <a href="https://en.wikipedia.org/wiki/MontageJS">History</a>
+                <!-- <a href="http://montage.org/press/">Press</a> -->
+                <!-- <a href="http://montage.org/contact-us/">Contact us</a> -->
+            </li>
+      </ul>
+
+        <a href="http://montage.org/" class="footer-logo"></a>
+
+      <p class="footer-end">2010–2018 Motorola, Montage Studio, Pacific Disaster Center, Kaazing</p>
+    </div>
+
+    </footer>
+
+
+  <!-- Google -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35717912-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>

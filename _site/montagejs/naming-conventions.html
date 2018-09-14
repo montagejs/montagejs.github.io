@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <title>Naming Conventions</title>
+
+    <link rel="stylesheet" href="/montage.org/stylesheets/base.css">
+
+    <!--highlight.js-->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/styles/github.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.7/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+</head>
+
+
+<body>
+  <header class="header">
+    <div class="header-container">
+        <a class="logo" href="http://montage.org/">Home</a>
+
+        <input id="nav-toggle" class="nav-toggle nav-toggle--main" type="checkbox">
+        <label class="nav-toggleLabel nav-toggleLabel--main" for="nav-toggle" onclick></label>
+
+        <nav class="nav">
+            <a class="nav-item" href="#">Montage</a>
+        </nav>
+    </div>
+</header>
+
+
+
+  <section id="docs" class="docs withSidenav">
+    <div class="wrapper">
+            
+<input id="sidenav-toggle" class="sidenav-toggle" type="checkbox">
+<label class="sidenav-toggleLabel" for="sidenav-toggle" onclick></label>
+
+        <nav class="sidenav">
+
+    <details open>
+        <summary>Quick Start</summary>
+        <a href="montagejs-setup.html" >Set Up</a>
+        <a href="hello-montage.html" >Hello Montage</a>
+    </details>
+
+    <details open>
+        <summary>Demos</summary>
+        <a href="montagejs-examples.html" >Examples</a>
+        <a href="http://montagejs.github.com/mfiddle/" target="_blank">Mfiddle</a>
+
+    </details>
+
+    <details open>
+        <summary>Tutorials</summary>
+        <a href="tutorial-using-substitutions-with-montagejs.html" >Using Substitutions</a>
+        <a href="tutorial-reddit-client-with-montagejs.html" >Building a Reddit Client</a>
+        <a href="tutorial-3d-applications-with-montagejs.html" >Building 3D Applications</a>
+    </details>
+
+    <details open>
+        <summary>Concepts</summary>
+        <a href="bootstrapping.html" >Bootstrapping</a>
+        <a href="application.html" >Application</a>
+        <a href="montagejs-templates.html" >Templates</a>
+        <a href="components.html" >Components</a>
+        <a href="component-composition.html" >Component Composition</a>
+        <a href="serialization-declaration.html" >Serialization Declaration</a>
+        <a href="montagejs-objects.html" >Objects</a>
+        <a href="data-binding.html" >Data Binding</a>
+        <a href="event-handling.html" >Event Handling</a>
+        <a href="draw-cycle.html" >Draw Cycle</a>
+        <a href="blueprints.html" >Blueprints</a>
+        <a href="gestures-composers.html" >Gestures & Composers</a>
+        <a href="naming-conventions.html" class="active">Naming Conventions</a>
+    </details>
+
+    <details open>
+        <summary>Built-in Components</summary>
+        <a href="repetition.html" >Repetition</a>
+        <a href="substitution.html" >Substitution</a>
+        <a href="overlay.html" >Overlay</a>
+    </details>
+
+    <details open>
+        <summary>UI Component Sets</summary>
+        <a href="themes.html" >Introduction</a>
+        <a href="theme-digit-components.html" >Digit</a>
+        <a href="theme-matte-components.html" >Matte</a>
+        <a href="theme-native-components.html" >Native</a>
+        <a href="autocomplete.html" >Autocomplete</a>
+    </details>
+
+    <details open>
+        <summary>Tools</summary>
+        <a href="tools-minit.html" >Minit</a>
+        <a href="tools-mop.html" >Mop</a>
+    </details>
+
+    <details open>
+        <summary>Help</summary>
+        <a href="faq.html" >FAQ</a>
+        <a href="frb.html" >FAQ - FRB Transition</a>
+        <a href="troubleshooting.html" >Troubleshooting</a>
+    </details>
+
+    <hr />
+
+    <a class="sidenav-mainLink" href="/montage.org/api/Montage.html">API Reference</a>
+
+    <hr />
+
+</nav>
+
+
+        <div class="main">
+            <a href="https://github.com/montagejs/montagejs.github.io/tree/master/montagejs/naming-conventions.md"
+               class="edit">Improve this Doc</a>
+
+            <article class="content">
+                <h1 id="naming-conventions">Naming Conventions</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#modules" id="markdown-toc-modules">Modules</a></li>
+  <li><a href="#components-reel-directories" id="markdown-toc-components-reel-directories">Components (<code class="highlighter-rouge">.reel</code> directories)</a></li>
+  <li><a href="#css-classes" id="markdown-toc-css-classes">CSS Classes</a>    <ul>
+      <li><a href="#rationale" id="markdown-toc-rationale">Rationale</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>This document summarizes MontageJS-specific naming conventions and recommendations for modules, components, and CSS classes. Please refer to these conventions when creating MontageJS packages or contributing to the MontageJS framework.</p>
+
+<h2 id="modules">Modules</h2>
+
+<p>All module and package names are written in lowercase letters or numbers and delimited by dashes (for example, <code class="highlighter-rouge">child-package</code>).</p>
+
+<h2 id="components-reel-directories">Components (<code class="highlighter-rouge">.reel</code> directories)</h2>
+
+<p>User interface components are stored in the ui directory of your MontageJS project and identified by a .reel extension.</p>
+
+<p>The following naming conventions apply for <code class="highlighter-rouge">.reel</code> directories:</p>
+
+<ul>
+  <li>Component names are always spelled in lowercase letters.</li>
+  <li>If a name uses multiple words, follow a dash-delimited <code class="highlighter-rouge">"word-word"</code> pattern; for example, <code class="highlighter-rouge">radio-button.reel</code> or <code class="highlighter-rouge">text-field.reel</code>.</li>
+</ul>
+
+<h2 id="css-classes">CSS Classes</h2>
+
+<p>CSS class names follow a dash-delimited <code class="highlighter-rouge">package-Component</code> and <code class="highlighter-rouge">package-Component-childElement</code> pattern. For variations and states, double dash is used. For example, for the Digit Progress component it would be:</p>
+
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">.digit-Progress</span>          <span class="c">/* package-Component */</span>
+<span class="nc">.digit-Progress-bar</span>      <span class="c">/* package-Component-childElement */</span>
+<span class="nc">.digit-Progress--small</span>   <span class="c">/* package-Component--variation */</span>
+<span class="nc">.digit-Progress--loading</span> <span class="c">/* package-Component--state */</span>
+</code></pre></div></div>
+
+<p>More specifically, the following conventions apply:</p>
+
+<ul>
+  <li><strong>Components:</strong> All CSS classes are namespaced with <em>package</em> + <em>dash</em>, e.g. <code class="highlighter-rouge">montage-</code>, <code class="highlighter-rouge">digit-</code>, <code class="highlighter-rouge">montage-digit-</code>, and followed by the CapCase component name. E.g. a button component would be <code class="highlighter-rouge">digit-Button</code>:</li>
+</ul>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;button</span> <span class="na">class=</span><span class="s">"digit-Button"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p>If a component name consists of more than one word, each new word also starts with an uppercase letter, a convention commonly referred to as <em>UpperCamelCase</em> (“CamelCaps”) formatting; for example, <code class="highlighter-rouge">montage-InputRange</code>.</p>
+
+<ul>
+  <li>
+    <p>CSS classes should always be qualified, e.g. <code class="highlighter-rouge">.digit-Slider .digit-Slider-knob</code>, not <code class="highlighter-rouge">.digit-Slider .knob</code> to avoid collision of <code class="highlighter-rouge">.knob</code> elsewhere.</p>
+  </li>
+  <li>
+    <p><strong>Composite components:</strong> For components with children follow these conventions:</p>
+
+    <ul>
+      <li>Only component itself should be UpperCamelCase, e.g. <code class="highlighter-rouge">FooComponent</code></li>
+      <li>If a component has a child element, the child’s name is written in lowercase (to signal the distinction between parent and child) and follows the component’s name separated by a dash; for example, <code class="highlighter-rouge">digit-Slider-thumb</code></li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Variations:</strong> If a component offers variations, a double-dash is used; for example: <code class="highlighter-rouge">digit-Button--primary</code>, <code class="highlighter-rouge">digit-Slider--vertical</code>.</p>
+  </li>
+  <li>
+    <p><strong>States:</strong> If a component uses different states, an <code class="highlighter-rouge">is-</code> prefix is used; for example: <code class="highlighter-rouge">is-hidden</code>, <code class="highlighter-rouge">is-active</code>. It’s advised to not style them globally because each component could handle a state differently. Limit it on a per component level: <code class="highlighter-rouge">.Component.is-hidden { display: none; }</code>.</p>
+  </li>
+</ul>
+
+<h3 id="rationale">Rationale</h3>
+
+<p>These CSS naming conventions are similar to the <a href="http://bem.info/method/">BEM</a> methodology with some minor syntax changes:</p>
+
+<ul>
+  <li>Name-spacing classes with the package avoids name collisions when multiple packages are in use.</li>
+  <li>Not using underscores ( _ ) increases usability because you can double-click each part to quickly select and edit it. (Try it: <code class="highlighter-rouge">digit-Slider-thumb</code> versus <code class="highlighter-rouge">digit_Slider_thumb</code>.)</li>
+  <li>Using upper CamelCase for components highlights component/child relationship.</li>
+  <li>Using lower camelCase for multiword names increases readability, but still keeps each part grouped together.</li>
+</ul>
+
+            </article>
+        </div>
+    </div>
+</section>
+
+
+  <footer class="footer">
+
+    <div class="wrapper">
+
+      <ul class="sitemap">
+            <li>
+                <a href="http://montage.org/gallery/" class="sitemap-main">Gallery</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/product/" class="sitemap-main">Product</a>
+                <a href="/montage.org/montage-studio/ide-at-a-glance.html">Overview</a>
+                <a href="/montage.org/montage-studio/tutorial-simple-to-do.html">Quick Start</a>
+                <a href="/montage.org/montage-studio/faq.html">FAQ</a>
+            </li> -->
+            <li>
+                <a href="http://montage.org/montagejs" class="sitemap-main">Open Source</a>
+                <a href="/montage.org/montagejs/">Docs</a>
+                <a href="/montage.org/montagejs/montagejs-setup.html">Quick Start</a>
+                <a href="/montage.org/montagejs/montagejs-examples.html">Examples</a>
+                <a href="/montage.org/api/AbstractButton.html">API</a>
+                <a href="/montage.org/montagejs/faq.html">FAQ</a>
+            </li>
+            <li>
+                <!-- <a href="http://montage.org/community" class="sitemap-main">Community</a> -->
+                <!-- <a href="http://forum.montage.org/">Forum</a> -->
+                <!-- <a href="http://montage.org/blog/events/">Events</a> -->
+                <a href="https://gitter.im/montagejs" target="_blank">Gitter</a>
+            </li>
+            <!-- <li>
+                <a href="http://montage.org/blog/" class="sitemap-main">Blog</a>
+            </li> -->
+            <li>
+                <a href="https://en.wikipedia.org/wiki/MontageJS">History</a>
+                <!-- <a href="http://montage.org/press/">Press</a> -->
+                <!-- <a href="http://montage.org/contact-us/">Contact us</a> -->
+            </li>
+      </ul>
+
+        <a href="http://montage.org/" class="footer-logo"></a>
+
+      <p class="footer-end">2010–2018 Motorola, Montage Studio, Pacific Disaster Center, Kaazing</p>
+    </div>
+
+    </footer>
+
+
+  <!-- Google -->
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-35717912-1', 'auto');
+    ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
