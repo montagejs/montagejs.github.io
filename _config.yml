@@ -1,4 +1,4 @@
-baseurl: montage.org
+baseurl: /montage.org
 
 # highlighter: pygments doesn't work w/ kramdown
 # coderay doesn't work w/ gh-pages
